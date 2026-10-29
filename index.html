@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Espectro LAB · Validação</title>
+<meta name="description" content="Questionário da Espectro LAB para terapeutas, professores e famílias: ajude-nos a decidir que materiais construir primeiro. Cerca de 7 minutos, sem dados das crianças.">
+<meta name="theme-color" content="#1F4FA0">
+<meta property="og:title" content="Ajude-nos a construir o LAB certo">
+<meta property="og:description" content="Questionário para terapeutas, professores e famílias. Cerca de 7 minutos, sem dados das crianças.">
+<meta property="og:image" content="icons/icon-512.png">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700..800&family=Lexend:wght@400;500;600&display=swap">
+<style>
+/* Layout: uma coluna de leitura (720px) para o questionário em passos; grelha de 12 colunas para o painel. Tokens do sistema visual Espectro LAB v2.1. */
+:root{
+  --fundo:#FFFFFF; --fundo-suave:#F3F5F9; --linha:#C9D0DC; --noite:#16213A; --texto-suave:#556076;
+  --atlantico:#1F4FA0; --sobre-atlantico:#FFFFFF;
+  --mangal:#18A08F; --mangal-texto:#0B6B60; --mel:#F2B53A; --barro:#E0613C; --barro-texto:#B23F22;
+  --atlantico-tinta:#E6EDF9; --mangal-tinta:#E2F4F1; --mel-tinta:#FDF1D8; --barro-tinta:#FBE6DF;
+  --mel-texto:#7A5300;
+  --font-display:"Bricolage Grotesque","Lexend",system-ui,sans-serif;
+  --font-texto:"Lexend",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --espaco-1:8px; --espaco-2:16px; --espaco-3:24px; --espaco-4:48px;
+  --raio-pequeno:8px; --raio-medio:16px; --raio-pilula:999px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --fundo:#0F1626; --fundo-suave:#18213A; --linha:#3A4766; --noite:#EEF1F7; --texto-suave:#A3ADC0;
+  --atlantico:#86A8EE; --sobre-atlantico:#0F1626;
+  --mangal:#3CC2B0; --mangal-texto:#5FD3C2; --mel:#F5C25E; --barro:#F0805E; --barro-texto:#F59A7C;
+  --atlantico-tinta:#1C2A4A; --mangal-tinta:#14302F; --mel-tinta:#33290F; --barro-tinta:#3A1D14;
+  --mel-texto:#F5C25E; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --fundo:#0F1626; --fundo-suave:#18213A; --linha:#3A4766; --noite:#EEF1F7; --texto-suave:#A3ADC0;
+  --atlantico:#86A8EE; --sobre-atlantico:#0F1626;
+  --mangal:#3CC2B0; --mangal-texto:#5FD3C2; --mel:#F5C25E; --barro:#F0805E; --barro-texto:#F59A7C;
+  --atlantico-tinta:#1C2A4A; --mangal-tinta:#14302F; --mel-tinta:#33290F; --barro-tinta:#3A1D14;
+  --mel-texto:#F5C25E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+img{max-width:100%}
+body{margin:0;background:var(--fundo);color:var(--noite);font-family:var(--font-texto);font-size:17px;line-height:28px;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--fundo)}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;letter-spacing:-.2px}
+h1{font-size:clamp(32px,6vw,48px);line-height:1.08;font-weight:780;letter-spacing:-.5px}
+h2{font-size:clamp(24px,4vw,32px);line-height:1.2;font-weight:700}
+h3{font-size:20px;line-height:26px;font-weight:700}
+p{margin:0}
+a{color:var(--atlantico)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--mel);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:760px;margin:0 auto}
+.suave{color:var(--texto-suave)}
+.rotulo{font-size:13px;line-height:18px;font-weight:600;letter-spacing:.6px;text-transform:uppercase}
+.legenda{font-size:13px;line-height:20px;color:var(--texto-suave)}
+.num{font-variant-numeric:tabular-nums}
+
+/* Cabeçalho */
+.topo{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--fundo);border-bottom:1px solid var(--linha)}
+.topo .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--espaco-2);padding-block:12px;flex-wrap:wrap}
+.logo{height:40px;width:auto;display:block}
+.logo .txt{fill:var(--noite)} .logo .a1{stroke:var(--mel)} .logo .a2{stroke:var(--mangal)} .logo .a3{stroke:var(--atlantico)} .logo .pt{fill:var(--barro)}
+.tabs{display:flex;gap:4px;background:var(--fundo-suave);padding:4px;border-radius:var(--raio-pilula)}
+.tab{border:0;background:transparent;padding:8px 16px;border-radius:var(--raio-pilula);font-size:14px;font-weight:600;cursor:pointer;color:var(--texto-suave)}
+.tab[aria-selected="true"]{background:var(--fundo);color:var(--noite);box-shadow:0 0 0 1px var(--linha)}
+
+/* Componentes da marca */
+.el-botao{font-family:var(--font-texto);font-size:15px;font-weight:600;line-height:20px;display:inline-flex;align-items:center;gap:var(--espaco-1);padding:12px 22px;border-radius:var(--raio-pilula);border:2px solid transparent;cursor:pointer;text-decoration:none;transition:background-color .15s,border-color .15s}
+.el-botao--primario{background:var(--atlantico);color:var(--sobre-atlantico)}
+.el-botao--secundario{background:transparent;color:var(--noite);border-color:var(--linha)}
+.el-botao--secundario:hover{border-color:var(--atlantico)}
+.el-botao[disabled]{opacity:.45;cursor:not-allowed}
+.el-etiqueta{font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;padding:4px 12px 4px 8px;border-radius:var(--raio-pilula);line-height:16px;white-space:nowrap}
+.el-etiqueta::before{content:"";width:10px;height:10px;flex:none;box-sizing:border-box}
+.el-etiqueta--terapeuta{background:var(--barro-tinta);color:var(--barro-texto)}
+.el-etiqueta--terapeuta::before{background:var(--barro);border-radius:50%}
+.el-etiqueta--familia{background:var(--mangal-tinta);color:var(--mangal-texto)}
+.el-etiqueta--familia::before{border:3px solid var(--mangal-texto);border-radius:50%}
+.el-etiqueta--professor{background:var(--mel-tinta);color:var(--noite)}
+.el-etiqueta--professor::before{background:var(--mel);border:1.5px solid var(--noite);border-radius:2px}
+.el-selo{display:inline-flex;align-items:center;gap:12px;padding:10px 18px 10px 10px;border:2px solid var(--noite);border-radius:var(--raio-pilula);background:var(--fundo)}
+.el-selo svg{width:36px;height:36px;flex:none}
+.el-selo .c{fill:none;stroke:var(--noite);stroke-width:2.5;stroke-linecap:round}
+.el-selo .p{fill:var(--barro)}
+.el-selo__t{display:flex;flex-direction:column}
+.el-selo__titulo{font-size:14px;line-height:18px;font-weight:600;letter-spacing:.4px;text-transform:uppercase}
+.el-selo__sub{font-size:12px;line-height:16px;color:var(--texto-suave)}
+.el-num{font-variant-numeric:tabular-nums;font-size:12px;font-weight:600;letter-spacing:.8px;color:var(--mangal-texto);border:1.5px solid var(--mangal-texto);border-radius:var(--raio-pilula);padding:2px 10px;line-height:18px;white-space:nowrap}
+.el-pontos{background-image:radial-gradient(circle,var(--linha) 1.5px,transparent 1.6px);background-size:24px 24px}
+.el-cartao{background:var(--fundo);border:1px solid var(--linha);border-radius:var(--raio-medio);padding:var(--espaco-3);display:flex;flex-direction:column;gap:var(--espaco-2)}
+
+/* Ilustrações */
+.ink{fill:none;stroke:var(--noite);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.ink-f{fill:var(--fundo);stroke:var(--noite);stroke-width:2.5;stroke-linejoin:round}
+.ink-s{fill:none;stroke:var(--texto-suave);stroke-width:2;stroke-linecap:round}
+.f-mel{fill:var(--mel)} .f-mangal{fill:var(--mangal)} .f-barro{fill:var(--barro)} .f-atl{fill:var(--atlantico)}
+.f-mel-t{fill:var(--mel-tinta)} .f-mangal-t{fill:var(--mangal-tinta)} .f-barro-t{fill:var(--barro-tinta)} .f-atl-t{fill:var(--atlantico-tinta)}
+.f-linha{fill:var(--linha)} .f-suave{fill:var(--fundo-suave)} .f-noite{fill:var(--noite)} .f-fundo{fill:var(--fundo)}
+.s-atl{stroke:var(--atlantico)} .s-mel{stroke:var(--mel)} .s-mangal{stroke:var(--mangal)} .s-barro{stroke:var(--barro)}
+
+/* Abertura */
+.abertura{padding-block:var(--espaco-4) var(--espaco-3)}
+.abertura__grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:var(--espaco-4);align-items:center}
+.abertura__txt{display:flex;flex-direction:column;gap:var(--espaco-2)}
+.abertura__txt .lead{font-size:19px;line-height:30px;max-width:56ch}
+.meta-linha{display:flex;flex-wrap:wrap;gap:var(--espaco-1) var(--espaco-2);align-items:center}
+.fluxo{border-radius:var(--raio-medio);padding:var(--espaco-3);background-color:var(--fundo-suave);display:flex;flex-direction:column;gap:12px}
+.fluxo__passo{display:grid;grid-template-columns:64px 1fr;gap:var(--espaco-2);align-items:center;background:var(--fundo);border:1px solid var(--linha);border-radius:var(--raio-medio);padding:12px var(--espaco-2)}
+.fluxo__passo svg{width:64px;height:64px}
+.fluxo__passo b{display:block;font-family:var(--font-display);font-size:18px;line-height:24px}
+.fluxo__passo span{font-size:14px;line-height:22px;color:var(--texto-suave)}
+.fluxo__seta{align-self:center;width:2px;height:12px;background:var(--linha)}
+
+.escolha{padding-block:var(--espaco-3) var(--espaco-4)}
+.escolha h2{margin-bottom:6px}
+.audiencias{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--espaco-2);margin-top:var(--espaco-3)}
+.aud{position:relative;display:flex;flex-direction:column;gap:12px;text-align:left;background:var(--fundo);border:2px solid var(--linha);border-radius:var(--raio-medio);padding:var(--espaco-3);cursor:pointer;transition:border-color .15s,transform .15s}
+.aud:hover{border-color:var(--atlantico)}
+.aud[aria-pressed="true"]{border-color:var(--atlantico);background:var(--atlantico-tinta)}
+.aud__forma{width:44px;height:44px}
+.aud b{font-family:var(--font-display);font-size:22px;line-height:28px}
+.aud span{font-size:15px;line-height:24px;color:var(--texto-suave)}
+.inicio-accoes{display:flex;flex-wrap:wrap;gap:var(--espaco-2);align-items:center;margin-top:var(--espaco-3)}
+
+/* Questionário */
+.passos{padding-block:var(--espaco-3) var(--espaco-4)}
+.progresso{display:flex;flex-direction:column;gap:10px;margin-bottom:var(--espaco-3)}
+.progresso__barras{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.progresso__barras i{height:6px;border-radius:3px;background:var(--linha)}
+.progresso__barras i.on{background:var(--atlantico)}
+.progresso__topo{display:flex;justify-content:space-between;gap:var(--espaco-2);align-items:center;flex-wrap:wrap}
+.passo__cab{display:flex;flex-direction:column;gap:6px;margin-bottom:var(--espaco-3)}
+.q{border:0;margin:0 0 var(--espaco-3);padding:var(--espaco-3);background:var(--fundo-suave);border-radius:var(--raio-medio);min-width:0}
+.q legend,.q .q__t{float:left;width:100%;padding:0;font-weight:600;font-size:18px;line-height:27px;margin-bottom:4px}
+.q legend+*{clear:both}
+.q__ajuda{font-size:14px;line-height:22px;color:var(--texto-suave);margin-bottom:12px;clear:both}
+.q__req{color:var(--barro-texto);font-weight:600;font-size:13px;margin-left:6px;white-space:nowrap}
+.q--erro{box-shadow:inset 0 0 0 2px var(--barro-texto)}
+.q__erro{display:none;color:var(--barro-texto);font-size:14px;font-weight:600;margin-top:10px}
+.q--erro .q__erro{display:block}
+.ops{display:flex;flex-wrap:wrap;gap:8px;clear:both}
+.op{position:relative;cursor:pointer}
+.op input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.op__c{display:flex;align-items:center;gap:10px;padding:10px 16px 10px 12px;border:1.5px solid var(--linha);border-radius:var(--raio-pilula);background:var(--fundo);font-size:15px;line-height:22px;transition:border-color .12s,background-color .12s}
+.op__c::before{content:"";width:18px;height:18px;flex:none;border:2px solid var(--texto-suave);border-radius:50%;box-sizing:border-box;background:var(--fundo)}
+.op input[type=checkbox]+.op__c::before{border-radius:5px}
+.op:hover .op__c{border-color:var(--atlantico)}
+.op input:checked+.op__c{border-color:var(--atlantico);background:var(--atlantico-tinta)}
+.op input:checked+.op__c::before{border-color:var(--atlantico);background:var(--atlantico);box-shadow:inset 0 0 0 3px var(--fundo)}
+.op input:focus-visible+.op__c{outline:3px solid var(--mel);outline-offset:2px}
+.op input:disabled+.op__c{opacity:.45}
+.ops--pic{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.ops--pic.ops--4{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.op--pic .op__c{flex-direction:column;align-items:stretch;gap:8px;padding:12px;border-radius:var(--raio-medio);height:100%}
+.op--pic .op__c::before{position:absolute;top:12px;right:12px}
+.op__ill{display:block;background:var(--fundo-suave);border-radius:var(--raio-pequeno);padding:8px}
+.op__ill svg{display:block;width:100%;height:auto}
+.op--pic .op__txt{font-weight:600;font-size:15px;line-height:20px;padding-right:4px}
+.op--pic .op__sub{font-size:13px;line-height:18px;color:var(--texto-suave);font-weight:400}
+.ops--icon{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.ops--icon .op__c{flex-direction:column;gap:6px;padding:14px 8px 12px;border-radius:var(--raio-medio);text-align:center;font-size:14px;line-height:18px;font-weight:600;height:100%}
+.ops--icon .op__c::before{position:absolute;top:8px;right:8px;width:16px;height:16px}
+.ops--icon svg{width:48px;height:48px}
+.escala{display:flex;gap:6px;flex-wrap:wrap;clear:both}
+.escala .op{flex:1 1 0;min-width:40px}
+.escala .op__c{justify-content:center;padding:10px 0;border-radius:var(--raio-pequeno);font-weight:600;font-variant-numeric:tabular-nums}
+.escala .op__c::before{display:none}
+.escala__ext{display:flex;justify-content:space-between;gap:var(--espaco-2);font-size:13px;line-height:18px;color:var(--texto-suave);margin-top:8px}
+textarea,.campo{width:100%;font:inherit;font-size:16px;line-height:24px;color:var(--noite);background:var(--fundo);border:1.5px solid var(--linha);border-radius:var(--raio-pequeno);padding:12px 14px}
+textarea{min-height:110px;resize:vertical}
+textarea:focus,.campo:focus{outline:none;border-color:var(--atlantico);box-shadow:0 0 0 3px var(--atlantico-tinta)}
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.campos label{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}
+.caixa{display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:15px;line-height:24px;clear:both}
+.caixa input{width:20px;height:20px;margin-top:2px;accent-color:var(--atlantico);flex:none}
+.info{clear:both;display:flex;flex-direction:column;gap:12px}
+.exemplo-cartao{max-width:380px;border:1px solid var(--linha);background:var(--fundo);border-radius:var(--raio-medio);padding:var(--espaco-3);display:flex;flex-direction:column;gap:12px;margin-bottom:var(--espaco-2)}
+.exemplo-cartao__pic{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.exemplo-cartao__pic div{border:1.5px solid var(--noite);border-radius:6px;padding:4px 2px 2px;text-align:center;font-size:10px;line-height:12px;background:var(--fundo)}
+.exemplo-cartao__pic svg{width:100%;height:auto;max-width:40px}
+.navpassos{display:flex;justify-content:space-between;gap:var(--espaco-2);align-items:center;flex-wrap:wrap;margin-top:var(--espaco-3);padding-top:var(--espaco-3);border-top:1px solid var(--linha)}
+.aviso{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--raio-medio);background:var(--atlantico-tinta);font-size:15px;line-height:24px}
+.aviso--mel{background:var(--mel-tinta)}
+.aviso b{font-weight:600}
+.entrevista{display:flex;align-items:center;gap:10px;font-size:14px;line-height:20px;padding:8px 14px;border:1.5px dashed var(--linha);border-radius:var(--raio-pilula)}
+.entrevista input{accent-color:var(--atlantico);width:18px;height:18px}
+
+.obrigado{padding-block:var(--espaco-4)}
+.obrigado__c{display:flex;flex-direction:column;gap:var(--espaco-2);align-items:flex-start}
+.obrigado svg.arco{width:96px;height:96px}
+
+/* Painel */
+.painel{padding-block:var(--espaco-3) var(--espaco-4);display:flex;flex-direction:column;gap:var(--espaco-3)}
+.painel__cab{display:flex;justify-content:space-between;gap:var(--espaco-2);flex-wrap:wrap;align-items:flex-end}
+.filtros{display:flex;gap:var(--espaco-2);flex-wrap:wrap;align-items:center}
+.seg{display:inline-flex;gap:2px;background:var(--fundo-suave);border-radius:var(--raio-pilula);padding:3px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:var(--raio-pilula);font-size:13px;font-weight:600;cursor:pointer;color:var(--texto-suave)}
+.seg button[aria-pressed="true"]{background:var(--fundo);color:var(--noite);box-shadow:0 0 0 1px var(--linha)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--espaco-2)}
+.kpi{background:var(--fundo);border:1px solid var(--linha);border-radius:var(--raio-medio);padding:var(--espaco-3) var(--espaco-3) 20px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.kpi__v{font-family:var(--font-display);font-size:40px;line-height:44px;font-weight:780;font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi__v small{font-size:20px;font-weight:700}
+.kpi__meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;line-height:18px;color:var(--texto-suave)}
+.medidor{position:relative;height:8px;border-radius:4px;background:var(--fundo-suave);margin-top:6px}
+.medidor i{position:absolute;inset:0 auto 0 0;border-radius:4px;background:var(--atlantico)}
+.medidor b{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--noite)}
+.estado{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;padding:3px 10px 3px 6px;border-radius:var(--raio-pilula);white-space:nowrap}
+.estado svg{width:14px;height:14px}
+.estado--ok{background:var(--mangal-tinta);color:var(--mangal-texto)}
+.estado--perto{background:var(--mel-tinta);color:var(--mel-texto)}
+.estado--abaixo{background:var(--barro-tinta);color:var(--barro-texto)}
+.grelha{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--espaco-3)}
+.g6{grid-column:span 6}.g12{grid-column:span 12}.g4{grid-column:span 4}.g8{grid-column:span 8}
+.bloco{background:var(--fundo);border:1px solid var(--linha);border-radius:var(--raio-medio);padding:var(--espaco-3);display:flex;flex-direction:column;gap:var(--espaco-2);min-width:0}
+.bloco__cab{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.bloco__cab h3{font-size:18px;line-height:24px}
+.legenda-aud{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;line-height:18px;color:var(--texto-suave)}
+.legenda-aud span{display:inline-flex;align-items:center;gap:6px}
+.forma{display:inline-block;width:10px;height:10px;flex:none;box-sizing:border-box}
+.forma--terapeuta{background:var(--barro);border-radius:50%}
+.forma--familia{border:3px solid var(--mangal);border-radius:50%}
+.forma--professor{background:var(--mel);border:1.5px solid var(--noite);border-radius:2px}
+.barras{display:flex;flex-direction:column;gap:10px}
+.barra{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) 76px;gap:12px;align-items:center;font-size:14px;line-height:20px}
+.barra__l{min-width:0}
+.barra__t{display:flex;gap:2px;height:14px;align-items:stretch;background:var(--fundo-suave);border-radius:0 4px 4px 0}
+.barra__t i{display:block;height:100%;min-width:0}
+.barra__t i:last-child{border-radius:0 4px 4px 0}
+.barra__t i.terapeuta{background:var(--barro)} .barra__t i.familia{background:var(--mangal)} .barra__t i.professor{background:var(--mel)} .barra__t i.uma{background:var(--atlantico)}
+.barra__v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.barra__v small{font-weight:400;color:var(--texto-suave)}
+.nps-barra{display:flex;gap:2px;height:28px;border-radius:6px;overflow:hidden}
+.nps-barra i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;font-weight:600;min-width:0;overflow:hidden;white-space:nowrap}
+.nps-d{background:var(--barro-tinta);color:var(--barro-texto)} .nps-p{background:var(--fundo-suave);color:var(--texto-suave)} .nps-pr{background:var(--mangal-tinta);color:var(--mangal-texto)}
+.criterios{display:flex;flex-direction:column}
+.criterio{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;padding:14px 0;border-top:1px solid var(--linha);align-items:center}
+.criterio:first-child{border-top:0;padding-top:0}
+.criterio__t{font-weight:600;font-size:15px;line-height:22px}
+.criterio__d{font-size:13px;line-height:20px;color:var(--texto-suave);grid-column:1}
+.pedidos{display:flex;flex-direction:column;gap:12px;max-height:520px;overflow:auto;padding-right:4px}
+.pedido{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:var(--raio-medio);background:var(--fundo-suave)}
+.pedido p{font-size:15px;line-height:24px}
+.pedido__m{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.tabela-wrap{overflow-x:auto;border:1px solid var(--linha);border-radius:var(--raio-medio)}
+table{border-collapse:collapse;width:100%;font-size:13px;line-height:18px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--linha);white-space:nowrap}
+th{font-weight:600;color:var(--texto-suave);background:var(--fundo-suave);position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+details summary{cursor:pointer;font-weight:600;font-size:15px}
+.banda-exemplo{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;padding:12px 16px;border-radius:var(--raio-medio);background:var(--mel-tinta);border:1.5px dashed var(--mel);font-size:14px;line-height:22px}
+.links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.link-aud{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:var(--raio-medio);background:var(--fundo-suave);min-width:0}
+.link-aud code{font-size:12px;line-height:18px;word-break:break-all;color:var(--texto-suave)}
+.dica{position:fixed;z-index:20;pointer-events:none;background:var(--noite);color:var(--fundo);font-size:13px;line-height:18px;padding:8px 10px;border-radius:8px;max-width:240px}
+.rodape{border-top:1px solid var(--linha);padding-block:var(--espaco-3)}
+.rodape .wrap{display:flex;justify-content:space-between;gap:var(--espaco-2);flex-wrap:wrap;align-items:center}
+.entrar{display:flex;flex-direction:column;gap:var(--espaco-2);max-width:480px}
+.entrar form{display:flex;gap:8px;flex-wrap:wrap}
+.entrar .campo{flex:1 1 220px;width:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:var(--noite);color:var(--fundo);padding:12px 20px;border-radius:var(--raio-pilula);font-size:14px;font-weight:600;z-index:30}
+
+@media (max-width:860px){
+  .abertura__grid{grid-template-columns:1fr;gap:var(--espaco-3)}
+  .audiencias{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g6,.g4,.g8{grid-column:span 12}
+  .links{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .kpis{grid-template-columns:1fr}
+  .barra{grid-template-columns:minmax(0,1fr) 64px;gap:4px 10px}
+  .barra__l{grid-column:1 / -1}
+  .campos{grid-template-columns:1fr}
+  .q{padding:var(--espaco-2)}
+  .escala .op{min-width:36px}
+  .logo{height:34px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="wrap">
+    <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 913 289" role="img" aria-label="Espectro LAB"><title>Espectro LAB</title><g transform="translate(214.1 216.6) scale(2.3)"><path d="M-22.6 8.2A24 24 0 1 1 22.6 8.2" fill="none" class="a1" stroke-width="12" stroke-linecap="round"/><path d="M-47.8 4.2A48 48 0 0 1 43.5 -20.3" fill="none" class="a2" stroke-width="12" stroke-linecap="round"/><path d="M-70.9 -12.5A72 72 0 0 1 24.6 -67.7" fill="none" class="a3" stroke-width="12" stroke-linecap="round"/><circle r="11" class="pt"/></g><path transform="translate(335.2 -2)" d="M88.8 250.7C89.2 250.4 89.3 249.7 89.2 242.1C89.1 235.5 89 233.7 88.8 233.4C88.5 233 87 233 72.6 233C63.1 233 56.7 232.9 56.6 232.8C56.6 232.6 56.5 217.7 56.5 199.6C56.5 166.8 56.5 166.6 56 166.1C55.5 165.5 55.4 165.5 46 165.5C37.7 165.5 36.5 165.6 36.1 165.9C35.8 166.2 35.8 170.4 35.8 208.3C35.8 240.7 35.8 250.5 36 250.7C36.5 251.2 88.2 251.1 88.8 250.7ZM112.6 250.9C113 250.7 113.4 249.5 115.5 241.9C116.6 238 117.1 236.6 117.6 236.1C118 235.6 118.4 235.6 132.6 235.6L147.2 235.5L147.8 236.1C148.3 236.4 148.7 237.2 149 238.5C149.3 239.5 149.7 241.2 150 242.1C150.3 243.1 150.7 244.6 150.9 245.4C151.1 246.2 151.4 247.3 151.6 247.8C151.8 248.3 152 249 152 249.4C152 249.7 152.2 250.2 152.5 250.5C153 251 153.3 251 163.8 251C173.3 251 174.5 251 174.7 250.6C174.8 250.3 172.5 243.2 163.2 215.5C162.9 214.6 162.4 212.9 161.7 210.9C161.4 210.2 161.1 209.1 160.9 208.5C160.7 207.9 160.4 207 160.2 206.5C160.1 206 159.8 205.1 159.5 204.4C159.3 203.7 158.9 202.6 158.7 201.9C158.4 201.2 158.1 200.3 158 199.9C157.9 199.5 157.6 198.6 157.3 197.9C156.8 196.4 156.2 194.4 155.8 193.2C155.6 192.8 153.5 186.4 151.1 179.2C147.2 167.5 146.6 165.9 146.1 165.7C145.4 165.5 120 165.4 119.6 165.7C119.2 165.9 117.9 169.2 117.1 172C116.9 172.6 116.6 173.7 116.3 174.4C115.1 178 115 178.2 112.6 185.5C111.6 188.6 110.6 191.5 110.4 191.9C110.2 192.3 110 192.9 110 193.2C110 193.4 109.8 194.1 109.5 194.6C109.2 195.2 109 195.8 109 196C109 196.2 108.8 196.9 108.5 197.6C107.8 199.5 107.5 200.5 107.1 201.8C106.9 202.4 106.6 203.4 106.3 204.1C105.1 207.8 105 207.9 102.6 215.2C101.6 218.3 100.6 221.2 100.4 221.7C100.2 222.1 100 222.7 100 222.9C100 223.2 99.8 223.7 99.6 224.1C99.4 224.5 99.1 225.2 99 225.7C98.9 226.2 98.6 227.2 98.3 227.9C97.5 230.4 97.3 231 94.5 239.2C92.3 245.7 92.2 246.2 91.5 248.2C90.9 249.8 90.9 250.7 91.3 250.8C91.8 251 112.1 251 112.6 250.9ZM226.8 250.3C236 249 242 246.3 246.2 241.7C248 239.7 249.7 236.5 250 234.3C250.2 233.5 250.4 232.4 250.5 231.8C251.1 228.5 250.4 222.7 249 219.8C247.8 217.3 247.4 216.7 245.3 214.6C243.5 212.8 242.7 212.2 241 211.3C237.5 209.7 233 208.5 228.4 208.1C226.5 207.9 226 207.7 226.4 207.2C226.6 207.1 228.3 206.7 230.2 206.4C232.1 206 234.1 205.6 234.5 205.4C235 205.2 236.2 204.7 237.1 204.4C238.1 204 239.3 203.3 239.9 202.9C240.4 202.4 241.1 201.9 241.4 201.8C242.7 201.1 246 196.3 246 195.1C246 194.9 246.2 194.4 246.4 193.9C247.3 192.2 247.3 183.5 246.4 181.5C246.2 181 245.7 179.9 245.4 179C243.8 175.4 240.4 172.1 235.7 169.7C234.2 168.9 232.4 168.2 231.9 168.1C231.4 168 230.6 167.8 230.1 167.6C228.4 166.9 224.2 166.2 219.4 165.9C212.6 165.4 180.6 165.3 179.9 165.8C179.5 166.1 179.5 168.9 179.5 208.4C179.5 242.1 179.6 250.6 179.8 250.8C180 250.9 189.8 251 201.6 250.9C221.8 250.8 223.3 250.8 226.8 250.3ZM200.2 233.8C200.1 233.8 200 229.6 200 224.7C200 216.7 200 215.7 200.4 215.4C200.8 215 201.7 215 209.5 215.1C219.7 215.2 221.3 215.4 225.5 217.3C226.7 217.9 228.8 220.1 229.4 221.4C230.3 223.3 230.3 226.5 229.3 228.4C228.6 229.9 226.8 231.6 225.5 232.1C225 232.3 223.8 232.8 222.9 233.2L221.1 233.8L210.8 233.9C205 234 200.3 234 200.2 233.8ZM122.3 220.7C121.9 220.3 121.9 219.1 122.5 217.4C122.8 216.6 123.2 215.1 123.5 214.1C123.7 213.2 124.2 211.5 124.5 210.5C125.2 208.1 125.9 205.6 126.5 203.5C127 201.7 127.7 199.3 128.5 196.6C128.8 195.6 129.2 194 129.5 193C129.8 192 130.2 190.5 130.5 189.6C130.8 188.6 131.2 187.1 131.5 186.1C131.8 185.2 132 184.2 132 184C132 183.8 132.1 183.5 132.2 183.3C132.6 182.7 133.4 183.6 133.8 184.9C133.9 185.6 134.2 186.8 134.5 187.6C134.7 188.4 135.2 190 135.5 191.1C136.1 193.3 136.7 195.6 137.5 198.3C137.8 199.3 138.3 200.9 138.5 201.8C138.8 202.7 139.2 204.3 139.5 205.2C139.8 206.2 140.2 207.8 140.5 208.7C140.8 209.7 141.2 211.3 141.5 212.3C141.8 213.3 142.2 214.9 142.5 215.8C143.8 220.2 143.8 220.3 143.5 220.6C143.1 221 122.7 221.1 122.3 220.7ZM200.3 200.5C200.1 200.2 200 196.9 200 191.4C200 183.6 200 182.7 200.4 182.4C200.8 182 201.5 181.9 208.4 182.1C214.5 182.2 216.3 182.3 218.2 182.7C222.4 183.6 224.7 185 226.2 187.8C226.8 188.9 226.9 189.4 226.9 191.2C226.8 193.9 226.3 195.3 224.4 197.1C222.7 198.8 220.8 199.7 217.2 200.4C214.7 200.9 213.7 201 207.4 201C200.8 201 200.5 201 200.3 200.5ZM188.9 146.3C189 146 189 141.1 188.9 135.4C188.8 125 188.5 119.9 187.6 114.4C187.1 111.6 187 108 187.4 107.9C187.6 107.9 187.8 108.4 188.2 110.5C188.6 112.2 189.2 114.5 189.5 115.1C189.6 115.4 190 116.3 190.4 117.1C190.7 118 191.2 119 191.5 119.5C192.3 121.1 195.1 124.4 196.6 125.5C198.4 126.9 200.2 128 200.8 128C201 128 201.5 128.2 201.9 128.4C203 129 209.1 129.8 211 129.6C213.6 129.4 216.7 128.8 217.4 128.4C217.8 128.2 218.4 128 218.8 127.9C220.8 127.4 225.3 124.1 227.3 121.5C232.4 115.2 234.7 107.2 234.9 94.8C235 89.8 235 88.4 234.5 84.9C233.8 79.3 232.4 74 231.3 72.4C231.2 72.1 231 71.7 231 71.6C231 71.4 230.6 70.6 230.2 69.9C229.7 69.1 229.2 68.2 229.1 68C227.7 65.5 223.7 61.9 221 60.5C220.1 60.1 219.2 59.6 218.9 59.5C218.7 59.4 217.4 59 216 58.6C213.5 58 213.2 58 208.8 58.1C203.9 58.2 204.1 58.1 199.5 59.9C197.7 60.6 194.6 63.2 192.7 65.7C190.6 68.5 188.4 73.5 187.9 76.6C187.7 78 186.8 79.8 186.4 79.7C186.2 79.6 186.1 77.5 186.2 70.2C186.3 63.5 186.2 60.7 186 60.3C185.7 59.8 185.7 59.8 177 59.8C169.3 59.8 168.3 59.8 168.2 60.1C167.9 60.7 167.9 146.1 168.2 146.6C168.3 147 169.4 147 178.5 147L188.7 147L188.9 146.3ZM139 129.1C141.1 128.9 143.3 128.6 143.9 128.4C144.4 128.2 145.1 128 145.4 128C146.3 128 149.6 126.8 151.6 125.8C154 124.5 157.3 122 158.6 120.2C159.8 118.8 160.7 117.1 161.4 115.1C162.1 113.4 162.6 108.8 162.2 106.9C162.1 106 162 104.9 162 104.2C162 102.6 160.2 98.7 158.5 96.8C154.9 92.7 149.2 89.8 141.1 87.8C138.9 87.3 137.6 86.9 135.9 86.5C134.9 86.2 133.6 85.9 132.9 85.8C128.3 84.7 126.9 84.3 124.6 83.2C123.7 82.8 122.6 82 122 81.5C119.6 78.9 121 75.4 125.1 73.8C126.7 73.2 127.2 73.1 129.9 73.1C133.4 73.1 135.4 73.7 137.6 75.1C138.9 76 141 78.4 141 79C141 79.2 141.2 79.8 141.5 80.4C141.8 81 142 81.9 142 82.8C142 84.5 142.4 84.8 143.6 84.5C144 84.4 145.8 84.2 147.5 84C149.2 83.9 151.6 83.6 152.9 83.4C154.1 83.2 155.7 83 156.4 83C157.8 83 159.3 82.6 159.5 82.2C159.9 81.6 159.8 77.3 159.3 75C158.7 72.4 157.9 70.1 157.3 69.5C157.2 69.3 157 69 157 68.8C157 68.7 155.8 67.3 154.4 65.9C152.5 64 151.3 63 150.2 62.5C149.3 62.1 147.9 61.3 147 60.9C146.1 60.4 145.2 60 145 60C144.8 60 143.9 59.8 143 59.5C138.3 58.2 138 58.1 130.9 58.1C123.8 58.1 122.2 58.3 118.8 59.5C118.1 59.8 117.2 60 116.8 60C115.9 60 110.1 63.1 108.6 64.4C106.1 66.5 105.3 67.4 104.4 68.9C103.2 70.7 102.3 72.7 102 74.2C101.9 74.9 101.7 75.8 101.5 76.4C100.9 78.8 101.5 85 102.5 87C102.8 87.5 103 88.1 103 88.3C103 88.4 103.6 89.3 104.3 90.3C106.6 93.5 111.4 96.4 116.8 98C117.2 98.2 117.7 98.4 117.9 98.5C118 98.6 118.5 98.8 119 98.9C119.5 99 120.5 99.2 121.4 99.5C122.2 99.8 123.8 100.2 124.9 100.5C126 100.8 127.6 101.2 128.5 101.5C129.4 101.8 130.3 102 130.5 102C130.8 102 131.6 102.2 132.5 102.5C133.4 102.7 135 103.2 136.1 103.5C141.7 105.1 143.7 107.4 142.4 110.5C141.2 113.2 137.9 114.6 132.8 114.6C127.6 114.6 123.9 113.2 121.5 110.2C120.9 109.5 120.3 108.5 120.1 108C119.9 107.5 119.6 106.9 119.5 106.6C119.3 106.4 119.1 105.4 119 104.5C118.9 103.7 118.7 102.8 118.5 102.7C118.3 102.5 116.7 102.6 109 103.5C106.7 103.8 104.1 104.1 103.2 104.1C102.3 104.2 101.5 104.4 101.2 104.5C100.7 104.8 100.9 110.7 101.5 112.5C101.7 113.3 102.1 114.3 102.2 114.9C102.6 116.3 104.8 119.9 106.1 121.2C107.7 122.8 109.9 124.6 111.8 125.5C112.6 126 113.7 126.5 114 126.7C114.3 126.8 114.8 127 115.1 127C115.4 127 115.9 127.2 116.3 127.3C117.5 128 122.3 128.9 125.6 129.2C127.4 129.4 129.2 129.6 129.6 129.6C130.7 129.8 134.5 129.6 139 129.1ZM278.1 129.4C280.5 129.2 283.2 128.8 284.1 128.5C285.1 128.2 286.4 127.9 287 127.8C289 127.2 293.3 125 295.5 123.2C300.5 119.2 303.7 112.2 303.4 105.8L303.4 104.1L302.4 104C301 103.7 292.1 103 288.3 102.9C285.8 102.8 285.2 102.8 284.9 103.1C284.7 103.4 284.5 103.6 284.5 103.8C284.5 103.9 284.4 104.8 284.2 105.9C283.8 109.2 281.9 111.8 279 113.2C277.8 113.8 277.2 113.8 274.1 113.9C270.8 114 270.4 114 268.8 113.4C263.5 111.5 261.1 108.1 259.6 100.8C259.3 99.3 259.3 98.6 259.5 98.4C259.8 98 259.5 98 287.9 97.5C297.4 97.3 301.5 97.1 301.7 96.9C301.8 96.8 302.1 95 302.3 93C302.7 89.8 302.7 89.1 302.4 85.2C302.1 82.8 301.8 80.1 301.5 79.2C301.2 78.4 300.9 77.2 300.9 76.8C300.7 76 299.9 74.2 298.1 70.8C296.9 68.4 293.2 64.5 290.6 62.9C288.4 61.5 285.6 60 285 60C284.7 60 284.1 59.8 283.7 59.6C282.3 59 280.2 58.5 277.7 58.2C274.5 57.9 266.6 58.1 264.1 58.6C261.5 59.2 256.9 60.9 255.7 61.7C255 62 253.8 62.9 252.8 63.5C250.6 64.8 247.2 68.3 245.9 70.5C245.3 71.4 244.8 72.3 244.6 72.5C244.1 73.1 243.1 75.3 242.5 76.9C242.2 77.7 241.7 78.9 241.5 79.5C241 80.7 240.2 84.3 239.8 86.9C238.9 92 238.9 98.4 239.8 103.1C240.2 105.6 241.3 109.8 241.6 110.5C241.8 110.8 242.3 111.9 242.6 112.8C243.8 115.5 246.4 119.1 249 121.5C251.3 123.7 251.8 124.1 253.4 124.9C253.8 125.1 254.9 125.6 255.7 126.1C256.5 126.5 258 127.2 259.1 127.5C260.2 127.8 261.8 128.2 262.6 128.5C263.4 128.8 264.7 129 265.4 129C266.1 129 267.9 129.2 269.4 129.4C273.2 129.8 273.4 129.8 278.1 129.4ZM346.2 129.4C348.7 129.2 351.4 128.8 352.5 128.5C353.5 128.2 354.9 127.8 355.6 127.6C358.6 126.8 363.2 124 366 121.2C367.1 120.1 369.7 116.3 369.9 115.5C370 115.2 370.2 114.7 370.4 114.4C370.5 114.1 371 112.9 371.4 111.8C372 109.9 372.1 109.1 372.2 105.2C372.4 99.8 372.5 100 369.1 100C367.9 100 364.1 99.8 360.6 99.5C356.3 99.1 354.2 99 353.9 99.2C353.4 99.4 353.3 99.7 353.1 102.5C353 105.5 352.7 106.5 351.7 108.6C351 110.1 349.2 111.9 347.5 112.9L345.6 113.9L342.2 113.9L338.9 113.9L336.7 112.8C334.1 111.4 332.3 109.6 330.9 106.9C327.9 100.8 327.4 89.8 329.8 83C331.7 77.4 335.8 74.2 341.1 74.2C347.4 74.1 351.5 78.4 352 85.5L352.1 87.6L352.9 87.6C354 87.6 359.1 87 363.5 86.5C365.6 86.2 367.8 86 368.4 86C370.1 86 370.1 86 370.1 81.5C370.1 78 370 77.3 369.4 75.2C367.4 68.6 363.3 63.8 357 60.8C354.8 59.8 352.8 59.1 349.7 58.5C347.2 58 346.6 57.9 340.9 58.1C334.9 58.2 332.6 58.5 330.1 59.4C329.6 59.6 328.5 59.9 327.8 60.1C326.4 60.5 322.1 62.8 320.1 64.3C318.1 65.8 315.4 68.7 313.7 71.4C312.1 73.8 311.6 74.7 310.6 77.4C310.3 78.1 309.8 79.2 309.5 79.9C309.2 80.6 309 81.5 309 81.8C309 82.1 308.8 83.1 308.5 84.1C308.2 85 307.9 87.2 307.8 89.1C307.6 90.9 307.4 92.8 307.4 93.3C307.1 94.6 308 102.6 308.5 104.6C308.8 105.6 309 106.7 309 107C309 107.5 309.6 109.2 310.6 111.4C310.8 111.8 311.1 112.6 311.4 113.1C312.9 116.9 318.1 122.5 322 124.7C323.2 125.4 324.3 126 324.4 126C324.5 126 324.8 126.2 325 126.3C325.2 126.5 326.4 127 327.6 127.3C328.9 127.7 330.6 128.2 331.4 128.5C332.2 128.8 333.4 129 334.1 129C334.8 129 336.6 129.2 338.1 129.4C339.6 129.5 341.1 129.7 341.4 129.7C341.6 129.7 343.8 129.6 346.2 129.4ZM510.5 129.2C511.6 129.1 513.4 128.7 514.3 128.5C515.2 128.2 516.2 128 516.4 128C516.7 128 517.2 127.8 517.5 127.7C517.9 127.5 518.6 127.2 519.1 127C520.3 126.6 523.5 124.9 525.2 123.8C527.2 122.5 530.8 118.8 532.3 116.6C534.5 113.2 535.9 109.9 536.8 106.1C537.9 101.5 538 99.9 538 93.8C538 87.3 537.6 84.1 536.5 80.4C536.2 79.5 536 78.7 536 78.5C536 77.8 533.6 73 532.3 70.9C529.8 67 525.8 63.5 521.7 61.6C518.2 59.9 516.8 59.4 512.8 58.6C510.2 58.1 509.2 58 504.5 58C499.7 58 498.7 58.1 496.1 58.6C489.9 59.9 486 61.7 481.9 64.9C478.4 67.7 476.1 70.7 473.6 75.8C473.3 76.4 472.3 79.2 471.7 81.5C471.3 82.9 470.6 87.8 470.4 91.9C470.2 95.2 470.9 103.4 471.6 105.9C472.7 109.4 472.9 110 473.6 111.6C474.6 114 476.4 117 478.1 119.1C480.1 121.5 484.2 124.7 486.5 125.8C491.2 127.9 494.3 128.8 498.1 129.2C499.5 129.4 501 129.6 501.4 129.6C502.6 129.8 508.1 129.5 510.5 129.2ZM412.6 128.8C414.3 128.4 416.1 128 416.7 127.7L417.2 127.5L417.2 118.9C417.2 108.9 417.3 109.2 415.4 109.9C414.7 110.2 413.8 110.5 413.5 110.7C413.1 110.9 411.9 111 410 111C407.4 111 407.1 110.9 405.8 110.3C403.7 109.2 402.3 107.3 401.9 105C401.8 104.2 401.6 97.7 401.6 90.5C401.5 77.4 401.5 77.3 402 76.8C402.5 76.2 402.7 76.2 409.5 76.3C414.7 76.3 416.6 76.2 416.9 76C417.2 75.7 417.2 74.5 417.2 68.2C417.2 63.5 417.1 60.5 417 60.2C416.7 59.8 416.4 59.8 409.6 59.8C402.8 59.8 402.5 59.7 402 59.2C401.5 58.8 401.5 58.4 401.5 51.6C401.5 44.8 401.5 44.5 401 44.2C400.7 44.1 398.5 44 395 44.1C390.3 44.1 389.4 44.2 389.2 44.5C389.1 44.7 388.9 45.8 388.8 47C388.5 49.3 387.9 52.1 387.5 52.9C386.2 55.9 385.5 57 384.2 58.2C382.1 60.4 379.1 61.7 375.2 62.1C373.2 62.4 373.2 62.2 373.2 69C373.2 73.7 373.3 75 373.6 75.4C373.9 75.8 374.4 75.9 377.4 76L380.9 76.1L381 93C381.1 104.7 381.3 110.2 381.5 110.8C381.6 111.3 381.9 112.5 382.1 113.5C382.7 116.5 383.9 119.5 385.8 121.9C387.4 124 389.1 125.4 391.6 126.7C393.5 127.7 397.7 128.9 399.9 129.1C401.8 129.3 411.5 129 412.6 128.8ZM96.8 127.7C97.2 127.5 97.2 127.1 97.2 119.4C97.2 112.4 97.2 111.2 96.9 110.9C96.5 110.5 94.3 110.5 76.9 110.5C58.1 110.5 57.3 110.5 56.9 110C56.5 109.6 56.5 108.7 56.5 101.5C56.5 94.1 56.5 93.4 56.9 93.1C57.2 92.8 61 92.8 74 92.8C90.3 92.8 90.7 92.7 91 92.3C91.4 91.5 91.3 77.7 91 77.3C90.7 77.1 86.6 77 73.9 77C64.7 77 57 76.9 56.8 76.8C56.6 76.7 56.5 74.6 56.5 68.6C56.5 64.1 56.5 60.4 56.6 60.3C56.7 60.1 63.2 60 76.5 60C89.7 60 96.4 59.9 96.8 59.7C97.2 59.5 97.2 59.1 97.2 51.5C97.2 45.1 97.2 43.5 96.9 43.1C96.5 42.6 95.9 42.6 76.5 42.4C50.8 42.2 52.1 42.2 43.5 42.4C37.5 42.6 36.2 42.7 36 43C35.6 43.6 35.7 127.3 36 127.7C36.5 128.1 96 128.1 96.8 127.7ZM443.8 127.7C444.2 127.5 444.2 127.1 444.2 113.5C444.2 98.4 444.4 95.2 445.6 91C446.8 86.8 449.2 83.4 452.2 81.8C454.1 80.7 457.1 80.3 459.3 80.7C460.2 80.9 461.2 81 461.5 81C462.1 81 464.5 81.9 466.1 82.7C467.4 83.4 467.7 83.4 467.9 82.7C468.1 81.5 469.1 61.5 468.9 60.9C468.8 60.5 468.4 60.2 467.7 59.9C467.1 59.7 466.1 59.4 465.6 59.1C465 58.9 463.4 58.6 462 58.3C459.5 57.9 459.4 57.9 456.9 58.5C451.2 59.6 448.2 62.5 445.6 69.1C444.7 71.3 444 73.6 444 74.2C444 74.5 443.8 75.4 443.6 76.2C443.4 77 443.1 78.8 443 80.3C442.7 83.4 442.2 85.3 441.8 85.4C441.6 85.5 441.5 82.6 441.5 72.9C441.5 60.7 441.5 60.3 441 60C440.4 59.7 424.1 59.6 423.9 60C423.8 60.1 423.8 75.4 423.7 93.9C423.7 120.9 423.8 127.6 424.1 127.8C424.5 128.1 443.2 128.1 443.8 127.7ZM500.1 113.3C495.6 111.2 492.5 105.8 491.8 99C491.6 97.7 491.4 96 491.4 95.2C491.2 93.4 491.9 86.9 492.5 84.5C493.7 80.3 496.1 76.8 498.8 75.4C499.6 75 501 74.6 502 74.4C503.6 74 503.9 74 505.6 74.4C507.6 74.8 508 74.9 509.4 75.7C511.5 76.9 513.4 79.1 514.8 82.1C515.3 83.3 515.9 84.9 516 85.6C516.1 86.3 516.4 87.5 516.6 88.4C517.2 90.7 517.2 99 516.5 101.5C516.2 102.5 516 103.6 516 103.9C516 104.9 513.9 109.1 512.6 110.5C511.7 111.6 510.9 112.2 509.4 113L507.5 114L504.5 114C501.9 114 501.5 113.9 500.1 113.3ZM199.9 112.2C198.2 111.9 197.6 111.7 196.1 110.7C194.1 109.5 191.7 106.8 191.1 105.2C190.9 104.8 190.6 104 190.4 103.6C190.2 103.2 189.9 102.4 189.6 101.9C188.5 99.3 188.5 90.5 189.6 86.8C191.2 81.5 193.6 78.4 197.7 76.4C198.7 76 199.3 75.9 201.8 75.9C203.6 75.9 204.8 76 205.2 76.2C207.1 77.2 208.6 78.5 209.7 79.8C211 81.5 213 85.8 213 86.9C213 87.3 213.2 88.2 213.4 88.9C214 90.7 214 97.2 213.4 99.8C212.4 104 211.2 106.8 209.5 108.8C208.2 110.3 205.9 111.8 204.5 112C202.3 112.4 201.9 112.4 199.9 112.2ZM260.1 85.6C259.9 84.9 260.4 83.5 261.8 80.6C262.6 78.8 264.7 76.6 266.5 75.7C270.5 73.6 276.1 74 279.3 76.6C280 77.2 282 79.8 282 80.1C282 80.3 282.2 80.9 282.5 81.5C283.1 82.7 283.4 85 282.9 85.6C282.7 85.9 281.2 86 271.4 86.1L260.3 86.3L260.1 85.6Z" fill-rule="evenodd" class="txt"/></svg>
+    <nav class="tabs" role="tablist" aria-label="Secções">
+      <button class="tab" role="tab" id="tab-q" aria-selected="true" aria-controls="vista-q">Questionário</button>
+      <button class="tab" role="tab" id="tab-p" aria-selected="false" aria-controls="vista-p" hidden>Painel de métricas</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="vista-q" role="tabpanel" aria-labelledby="tab-q">
+    <div id="ecra"></div>
+  </section>
+  <section id="vista-p" role="tabpanel" aria-labelledby="tab-p" hidden>
+    <div class="wrap painel" id="painel"></div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <span class="legenda">Espectro LAB · O terapeuta pede. O LAB constrói. · Questionário de validação v1 · Out 2026</span>
+    <span class="legenda">Materiais à medida, sem dados das crianças.</span>
+  </div>
+</footer>
+<div class="dica" id="dica" hidden></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- Audiências ---------- */
+const AUD = {
+  terapeuta:{nome:"Terapeuta", plural:"Terapeutas", desc:"Terapia da fala, ocupacional, psicologia, psicomotricidade e outras áreas."},
+  professor:{nome:"Professor/a", plural:"Professores", desc:"Do pré-escolar ao secundário, ensino regular ou especial."},
+  familia:{nome:"Família", plural:"Famílias", desc:"Mães, pais, avós e outros adultos responsáveis."}
+};
+const ORD = ["terapeuta","professor","familia"];
+const FORMA = {
+  terapeuta:'<svg class="aud__forma" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="14" class="f-barro"/></svg>',
+  familia:'<svg class="aud__forma" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="12" fill="none" class="s-mangal" stroke-width="7"/></svg>',
+  professor:'<svg class="aud__forma" viewBox="0 0 44 44" aria-hidden="true"><rect x="9" y="9" width="26" height="26" rx="3" class="f-mel" style="stroke:var(--noite);stroke-width:2"/></svg>'
+};
+
+/* ---------- Ilustrações (traço simples, compatível com o estilo ARASAAC) ---------- */
+const P = { // pictogramas 48x48
+  sol:'<circle cx="24" cy="24" r="7" class="ink"/><path class="ink" d="M24 7v5M24 36v5M7 24h5M36 24h5M12 12l3.5 3.5M32.5 32.5L36 36M36 12l-3.5 3.5M15.5 32.5L12 36"/>',
+  dentes:'<path class="ink" d="M10 38l18-18"/><rect x="25" y="9" width="15" height="8" rx="2" transform="rotate(-45 32 13)" class="ink"/><path class="ink" d="M29 9l-2-2M33 7l-1-2M36 9l1-2"/>',
+  comer:'<path class="ink" d="M7 24h34a17 15 0 0 1-34 0z"/><path class="ink" d="M18 17c0-3 3-3 3-6M26 17c0-3 3-3 3-6"/>',
+  vestir:'<path class="ink" d="M17 9l-9 6 4 7 4-2v19h16V20l4 2 4-7-9-6c-1 3-4 5-7 5s-6-2-7-5z"/>',
+  sair:'<rect x="13" y="7" width="20" height="33" rx="2" class="ink"/><circle cx="28" cy="25" r="1.6" class="f-noite"/><path class="ink" d="M6 41h36"/>',
+  esperar:'<path class="ink" d="M14 7h20M14 41h20M16 7c0 11 16 9 16 17s-16 6-16 17M32 7c0 11-16 9-16 17s16 6 16 17"/>',
+  dormir:'<path class="ink" d="M31 9a15 15 0 1 0 9 24A13 13 0 0 1 31 9z"/><path class="ink" d="M35 11h5l-5 6h5"/>',
+  brincar:'<circle cx="24" cy="24" r="15" class="ink"/><path class="ink" d="M9 24h30M24 9c-6 8-6 22 0 30M24 9c6 8 6 22 0 30"/>',
+  mochila:'<rect x="12" y="13" width="24" height="27" rx="6" class="ink"/><path class="ink" d="M19 13v-3a5 5 0 0 1 10 0v3M17 28h14v7H17z"/>'
+};
+function pic(k, cls){ return '<svg viewBox="0 0 48 48" aria-hidden="true"'+(cls?' class="'+cls+'"':'')+'>'+P[k]+'</svg>'; }
+
+const ILL = {
+  agenda:`<svg viewBox="0 0 160 100" aria-hidden="true"><rect x="4" y="18" width="152" height="64" rx="8" class="f-fundo"/>
+    ${[0,1,2,3].map(i=>`<g transform="translate(${10+i*37} 26)"><rect width="30" height="38" rx="4" class="ink-f"/><g transform="translate(3 2) scale(.5)">${P[["sol","dentes","comer","mochila"][i]]}</g><rect x="5" y="30" width="20" height="3" rx="1.5" class="f-linha"/></g>`).join("")}
+    <circle cx="25" cy="74" r="3" class="f-mangal"/><circle cx="62" cy="74" r="3" class="f-linha"/><circle cx="99" cy="74" r="3" class="f-linha"/><circle cx="136" cy="74" r="3" class="f-linha"/></svg>`,
+  historia:`<svg viewBox="0 0 160 100" aria-hidden="true">${[0,1,2].map(i=>`<g transform="translate(${6+i*51} 14)"><rect width="46" height="58" rx="4" class="ink-f"/><circle cx="23" cy="26" r="6" class="ink"/><path class="ink" d="M23 32v12M16 38h14M23 44l-6 9M23 44l6 9"/></g>`).join("")}
+    <path d="M18 18h22a4 4 0 0 1 4 4v4a4 4 0 0 1-4 4h-12l-6 5v-5h-4a4 4 0 0 1-4-4v-4a4 4 0 0 1 4-4z" class="f-atl-t" style="stroke:var(--atlantico);stroke-width:2"/>
+    <circle cx="138" cy="34" r="4" class="f-mel"/><rect x="10" y="80" width="140" height="4" rx="2" class="f-linha"/></svg>`,
+  jogo:`<svg viewBox="0 0 160 100" aria-hidden="true"><g><rect x="16" y="10" width="36" height="36" rx="6" class="ink-f"/><circle cx="34" cy="28" r="9" class="f-barro"/></g>
+    <g><rect x="16" y="54" width="36" height="36" rx="6" class="ink-f"/><rect x="25" y="63" width="18" height="18" rx="2" class="f-mel" style="stroke:var(--noite);stroke-width:1.5"/></g>
+    <g><rect x="108" y="10" width="36" height="36" rx="6" class="ink-f"/><rect x="117" y="19" width="18" height="18" rx="2" class="f-mel" style="stroke:var(--noite);stroke-width:1.5"/></g>
+    <g><rect x="108" y="54" width="36" height="36" rx="6" class="ink-f"/><circle cx="126" cy="72" r="9" class="f-barro"/></g>
+    <path d="M54 28C80 28 80 72 106 72" fill="none" class="s-atl" stroke-width="3" stroke-dasharray="5 5" stroke-linecap="round"/><path d="M54 72C80 72 80 28 106 28" fill="none" class="s-atl" stroke-width="3" stroke-dasharray="5 5" stroke-linecap="round"/></svg>`,
+  app:`<svg viewBox="0 0 160 100" aria-hidden="true"><rect x="56" y="4" width="48" height="92" rx="9" class="ink-f"/><rect x="73" y="10" width="14" height="3" rx="1.5" class="f-linha"/>
+    <circle cx="80" cy="46" r="17" fill="none" class="s-mel" stroke-width="7" style="stroke:var(--linha)"/><path d="M80 29a17 17 0 0 1 16.2 22" fill="none" class="s-atl" stroke-width="7" stroke-linecap="round"/>
+    <rect x="66" y="74" width="28" height="10" rx="5" class="f-atl"/><circle cx="80" cy="46" r="3" class="f-barro"/></svg>`,
+  video:`<svg viewBox="0 0 160 100" aria-hidden="true"><rect x="14" y="10" width="132" height="76" rx="8" class="ink-f"/><circle cx="80" cy="44" r="18" class="f-atl"/><path d="M75 35l14 9-14 9z" class="f-fundo"/>
+    <rect x="26" y="72" width="108" height="4" rx="2" class="f-linha"/><rect x="26" y="72" width="44" height="4" rx="2" class="f-barro"/></svg>`,
+  musica:`<svg viewBox="0 0 160 100" aria-hidden="true"><path class="ink" d="M58 70V22l48-10v48"/><path class="ink" d="M58 34l48-10"/><ellipse cx="50" cy="72" rx="9" ry="7" class="f-noite"/><ellipse cx="98" cy="62" rx="9" ry="7" class="f-noite"/>
+    <path d="M118 30c6 4 6 14 0 18M126 24c10 7 10 23 0 30" fill="none" class="s-mangal" stroke-width="3" stroke-linecap="round"/><circle cx="30" cy="30" r="5" class="f-mel"/></svg>`,
+  ag_cor:`<svg viewBox="0 0 160 70" aria-hidden="true">${[0,1,2,3].map(i=>`<g transform="translate(${6+i*38} 10)"><rect width="34" height="44" rx="5" class="${["f-mel-t","f-atl-t","f-barro-t","f-mangal-t"][i]}" style="stroke:var(--noite);stroke-width:2"/><g transform="translate(5 3) scale(.5)">${P[["sol","dentes","comer","mochila"][i]].replace(/class="ink"/g,'class="ink" style="stroke:'+["var(--mel-texto)","var(--atlantico)","var(--barro-texto)","var(--mangal-texto)"][i]+'"')}</g><rect x="6" y="34" width="22" height="4" rx="2" class="f-noite"/></g>`).join("")}</svg>`,
+  ag_pb:`<svg viewBox="0 0 160 70" aria-hidden="true">${[0,1,2,3].map(i=>`<g transform="translate(${6+i*38} 10)"><rect width="34" height="44" rx="5" class="ink-f"/><g transform="translate(5 3) scale(.5)">${P[["sol","dentes","comer","mochila"][i]]}</g><rect x="6" y="34" width="22" height="4" rx="2" class="f-noite"/></g>`).join("")}</svg>`,
+  ag_foto:`<svg viewBox="0 0 160 70" aria-hidden="true">${[0,1,2,3].map(i=>`<g transform="translate(${6+i*38} 10)"><rect width="34" height="44" rx="5" class="ink-f"/><rect x="4" y="4" width="26" height="24" rx="2" class="f-linha"/><path d="M6 26l8-9 6 6 4-4 6 7z" class="f-noite" opacity=".55"/><circle cx="23" cy="10" r="3" class="f-fundo"/><rect x="6" y="34" width="22" height="4" rx="2" class="f-noite"/></g>`).join("")}</svg>`,
+  ag_dep:`<svg viewBox="0 0 160 70" aria-hidden="true"><g transform="translate(20 10)"><rect width="34" height="44" rx="5" class="f-mel-t" style="stroke:var(--noite);stroke-width:2"/><rect x="6" y="34" width="22" height="4" rx="2" class="f-noite"/></g><g transform="translate(63 10)"><rect width="34" height="44" rx="5" class="ink-f"/><rect x="6" y="34" width="22" height="4" rx="2" class="f-noite"/></g><g transform="translate(106 10)"><rect width="34" height="44" rx="5" class="ink-f"/><rect x="4" y="4" width="26" height="24" rx="2" class="f-linha"/><rect x="6" y="34" width="22" height="4" rx="2" class="f-noite"/></g><path class="ink-s" d="M57 32h3M100 32h3"/></svg>`,
+  ent_a4:`<svg viewBox="0 0 120 80" aria-hidden="true"><rect x="40" y="4" width="40" height="56" rx="3" class="ink-f"/><rect x="46" y="12" width="20" height="4" rx="2" class="f-noite"/>${[0,1,2,3].map(i=>`<rect x="46" y="${22+i*8}" width="${28-i*3}" height="3" rx="1.5" class="f-linha"/>`).join("")}<path class="ink-s" d="M30 70h60"/><text x="60" y="76" text-anchor="middle" font-size="8" style="fill:var(--texto-suave);font-family:var(--font-texto)">A4</text></svg>`,
+  ent_cartoes:`<svg viewBox="0 0 120 80" aria-hidden="true"><rect x="30" y="16" width="44" height="52" rx="5" class="ink-f" transform="rotate(-8 52 42)"/><rect x="46" y="12" width="44" height="52" rx="5" class="ink-f"/><circle cx="54" cy="20" r="4" class="ink"/><g transform="translate(56 24) scale(.5)">${P.sol}</g></svg>`,
+  ent_tablet:`<svg viewBox="0 0 120 80" aria-hidden="true"><rect x="22" y="8" width="76" height="60" rx="7" class="ink-f"/><rect x="30" y="16" width="60" height="44" rx="3" class="f-atl-t"/><circle cx="48" cy="38" r="8" class="f-barro"/><rect x="62" y="31" width="16" height="16" rx="2" class="f-mel"/></svg>`,
+  ent_tel:`<svg viewBox="0 0 120 80" aria-hidden="true"><rect x="42" y="4" width="36" height="72" rx="7" class="ink-f"/><path d="M48 22h20a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H56l-5 4v-4h-3a3 3 0 0 1-3-3v-8a3 3 0 0 1 3-3z" class="f-mangal-t" style="stroke:var(--mangal-texto);stroke-width:1.5"/><rect x="50" y="46" width="20" height="16" rx="2" class="f-linha"/><path d="M52 60l5-6 4 4 3-3 4 5z" class="f-noite" opacity=".5"/></svg>`
+};
+
+/* ---------- Perguntas ---------- */
+const STEPS = [
+  {t:"Sobre si", d:"Para sabermos com quem estamos a falar. Não pedimos nenhum dado das crianças."},
+  {t:"O dia-a-dia de hoje", d:"Como prepara ou encontra os materiais que usa agora."},
+  {t:"Os materiais", d:"Veja os exemplos e diga-nos o que faria mais diferença."},
+  {t:"O LAB e o bootcamp", d:"A sua reacção à ideia, com toda a franqueza."},
+  {t:"Para terminar", d:"Um pedido concreto e, se quiser, um contacto para testar protótipos."}
+];
+const HORAS = [["lt1","Menos de 1 hora"],["1a3","1 a 3 horas"],["3a5","3 a 5 horas"],["5a10","5 a 10 horas"],["gt10","Mais de 10 horas"]];
+const HORAS_V = {lt1:.5,"1a3":2,"3a5":4,"5a10":7.5,gt10:12};
+const PRECO = [["0","Nada"],["ate5","Até 5 000 Kz"],["5a15","5 000 a 15 000 Kz"],["15a30","15 000 a 30 000 Kz"],["gt30","Mais de 30 000 Kz"]];
+const T = "terapeuta", PR = "professor", F = "familia";
+
+const Q = [
+  // Passo 1 — Sobre si
+  {id:"t_area", s:1, aud:[T], type:"single", req:true, label:"Qual é a sua área?", opts:[["fala","Terapia da fala"],["ocup","Terapia ocupacional"],["psi","Psicologia"],["psicomot","Psicomotricidade"],["aba","Análise do comportamento (ABA)"],["edesp","Educação especial"],["outra","Outra"]]},
+  {id:"t_anos", s:1, aud:[T], type:"single", label:"Há quanto tempo trabalha com pessoas no espectro?", opts:[["lt2","Menos de 2 anos"],["2a5","2 a 5 anos"],["5a10","5 a 10 anos"],["gt10","Mais de 10 anos"]]},
+  {id:"t_casos", s:1, aud:[T], type:"single", label:"Quantas crianças ou jovens no espectro acompanha por semana?", opts:[["1a5","1 a 5"],["6a15","6 a 15"],["16a30","16 a 30"],["gt30","Mais de 30"]]},
+  {id:"t_local", s:1, aud:[T], type:"multi", label:"Onde trabalha?", help:"Pode escolher mais de uma opção.", opts:[["clinica","Clínica privada"],["publico","Hospital ou centro público"],["escola","Escola"],["domicilio","Domicílio"],["online","Online"],["ong","Associação ou ONG"]]},
+  {id:"p_nivel", s:1, aud:[PR], type:"single", req:true, label:"Em que nível ensina?", opts:[["pre","Pré-escolar"],["prim","Primário (1.ª à 6.ª)"],["ciclo1","I ciclo"],["ciclo2","II ciclo"],["especial","Ensino especial"]]},
+  {id:"p_escola", s:1, aud:[PR], type:"single", label:"Que tipo de escola?", opts:[["publica","Pública"],["privada","Privada"],["comp","Comparticipada"],["especial","Escola de ensino especial"]]},
+  {id:"p_alunos", s:1, aud:[PR], type:"single", label:"Quantos alunos no espectro tem este ano?", help:"Com ou sem diagnóstico formal.", opts:[["0","Nenhum este ano, mas já tive"],["1","1"],["2a3","2 ou 3"],["4m","4 ou mais"],["ns","Não sei ao certo"]]},
+  {id:"p_formacao", s:1, aud:[PR], type:"single", label:"Recebeu formação em educação inclusiva?", opts:[["sim","Sim, aprofundada"],["alguma","Alguma"],["nao","Não"]]},
+  {id:"f_relacao", s:1, aud:[F], type:"single", req:true, label:"Qual é a sua relação com a criança ou jovem?", opts:[["mae","Mãe"],["pai","Pai"],["avo","Avó ou avô"],["tio","Tia ou tio"],["irmao","Irmã ou irmão"],["tutor","Tutor/a"],["outro","Outra"]]},
+  {id:"f_idade", s:1, aud:[F], type:"single", label:"Que idade tem?", help:"Só a faixa etária. Não precisamos do nome nem de outros dados.", opts:[["0a3","0 a 3 anos"],["4a6","4 a 6 anos"],["7a12","7 a 12 anos"],["13a17","13 a 17 anos"],["18m","18 ou mais"]]},
+  {id:"f_terapia", s:1, aud:[F], type:"single", label:"Tem acompanhamento terapêutico?", opts:[["regular","Sim, todas as semanas"],["asvezes","Sim, mas com falhas"],["procura","Não, mas estamos à procura"],["nao","Não"]]},
+  {id:"c_prov", s:1, type:"single", label:"Em que província está?", opts:[["luanda","Luanda"],["benguela","Benguela"],["huila","Huíla"],["huambo","Huambo"],["cabinda","Cabinda"],["outra","Outra"]]},
+
+  // Passo 2 — Dia-a-dia
+  {id:"c_horas", s:2, type:"single", req:true, label:{terapeuta:"Quanto tempo gasta por semana a preparar ou procurar materiais para as sessões?", professor:"Quanto tempo gasta por semana a adaptar materiais para alunos no espectro?", familia:"Quanto tempo gasta por semana a procurar ou fazer materiais para apoiar em casa?"}, opts:HORAS},
+  {id:"c_origem", s:2, type:"multi", label:"Onde arranja hoje os materiais?", help:"Pode escolher mais de uma opção.", opts:[["mao","Faço eu, à mão"],["net","Internet (Google, Pinterest)"],["arasaac","Pictogramas ARASAAC"],["compro","Compro livros ou kits"],["terapeuta","Recebo do terapeuta"],["escola","Recebo da escola"],["apps","Apps"],["nenhum","Não uso materiais"]]},
+  {id:"c_dores", s:2, type:"multi", max:3, label:"Quais são as maiores dificuldades?", help:"Escolha até 3.", opts:[["tempo","Falta de tempo"],["lingua","Materiais em inglês ou pouco adaptados a Angola"],["custo","Custo de impressão e de material"],["ferramentas","Não sei desenhar nem usar as ferramentas"],["infra","Falta de internet ou de electricidade"],["personalizar","Difícil adaptar a cada criança"],["continuidade","Pouca ligação entre casa, escola e terapia"],["saber","Não sei que material usar"]]},
+  {id:"t_ferr", s:2, aud:[T], type:"multi", label:"Que ferramentas usa para fazer materiais?", opts:[["office","Word ou PowerPoint"],["canva","Canva"],["arasaac","ARASAAC"],["boardmaker","Boardmaker"],["ia","ChatGPT ou outra IA"],["nenhuma","Nenhuma digital"]]},
+  {id:"t_ia", s:2, aud:[T], type:"single", label:"Já usou inteligência artificial para preparar materiais?", opts:[["freq","Sim, com frequência"],["exp","Já experimentei"],["curioso","Nunca, mas tenho curiosidade"],["reservas","Nunca, e tenho reservas"]]},
+  {id:"p_ligacao", s:2, aud:[PR], type:"single", label:"Com que frequência fala com o terapeuta dos seus alunos?", opts:[["semanal","Todas as semanas"],["mensal","Uma vez por mês"],["raro","Raramente"],["nunca","Nunca"]]},
+  {id:"f_rotinas", s:2, aud:[F], type:"icon", label:"Em que momentos do dia gostaria de ter mais apoio?", help:"Toque em todos os que se aplicam.", opts:[["acordar","Acordar","sol"],["higiene","Higiene","dentes"],["refeicoes","Refeições","comer"],["vestir","Vestir","vestir"],["sair","Sair de casa","sair"],["esperar","Esperar e mudar de actividade","esperar"],["dormir","Dormir","dormir"],["brincar","Brincar","brincar"]]},
+  {id:"f_recebe", s:2, aud:[F], type:"single", label:"Recebe materiais do terapeuta ou da escola para usar em casa?", opts:[["sim","Sim"],["asvezes","Às vezes"],["nao","Não"]]},
+  {id:"c_disp", s:2, type:"multi", label:"Que equipamentos tem à mão?", opts:[["android","Telemóvel Android"],["iphone","iPhone"],["tablet","Tablet"],["pc","Computador"],["impressora","Impressora acessível"]]},
+  {id:"c_net", s:2, type:"single", label:"Como é o seu acesso à internet?", opts:[["sempre","Tenho sempre"],["falha","Às vezes falha"],["dados","Só com dados móveis, que são caros"],["raro","Raramente tenho"]]},
+
+  // Passo 3 — Materiais (ilustradas)
+  {id:"c_formatos", s:3, type:"pic", multi:true, max:3, req:true, label:"Que tipo de material usaria primeiro?", help:"Escolha até 3. Os desenhos mostram o tipo de material que o LAB quer produzir.", opts:[["agenda","Agenda visual","agenda","Para imprimir: passos do dia com pictogramas"],["historia","História social","historia","Uma situação explicada em quadradinhos"],["jogo","Jogo","jogo","Associar, ordenar, emparelhar"],["app","Pequena app","app","Temporizador visual, escolhas, rotinas"],["video","Vídeo","video","Modelação: ver como se faz, passo a passo"],["musica","Música","musica","Canções para rotinas e transições"]]},
+  {id:"c_agenda", s:3, type:"pic", label:"Qual destas agendas visuais funcionaria melhor?", help:"A mesma agenda da manhã em três estilos.", opts:[["cor","Pictogramas a cores","ag_cor"],["pb","Preto e branco","ag_pb","Fácil de fotocopiar"],["foto","Fotografias reais","ag_foto","Da casa ou da sala"],["depende","Depende da criança","ag_dep"]]},
+  {id:"c_util", s:3, type:"scale", label:"Quão útil seria um material como este?", pre:"exemplo", min:["1","Nada útil"], max:["5","Muito útil"]},
+  {id:"c_entrega", s:3, type:"pic", multi:true, cols:4, label:"Como prefere receber os materiais?", opts:[["a4","Folha A4 para imprimir","ent_a4"],["cartoes","Cartões para recortar","ent_cartoes"],["tablet","No tablet","ent_tablet"],["telemovel","No telemóvel (WhatsApp)","ent_tel"]]},
+  {id:"c_lingua", s:3, type:"multi", label:"Em que línguas precisa dos materiais?", opts:[["pt","Português"],["nacional","Português e uma língua nacional"],["en","Inglês"],["lga","Língua gestual angolana"]]},
+
+  // Passo 4 — O LAB
+  {id:"i_lab", s:4, type:"info"},
+  {id:"c_ellis", s:4, type:"single", req:true, label:"Se o Espectro LAB deixasse de existir, como se sentiria?", opts:[["muito","Muito desiludido/a"],["algo","Algo desiludido/a"],["indif","Indiferente"]]},
+  {id:"c_nps", s:4, type:"nps", label:{terapeuta:"Recomendaria o LAB a um colega terapeuta?", professor:"Recomendaria o LAB a um colega professor?", familia:"Recomendaria o LAB a outra família?"}, min:["0","De certeza que não"], max:["10","De certeza que sim"]},
+  {id:"c_priv", s:4, type:"scale", label:"Quão importante é para si que o LAB não use dados das crianças?", min:["1","Pouco importante"], max:["5","Essencial"]},
+  {id:"c_boot", s:4, type:"single", label:"Participaria num bootcamp presencial do LAB, de 4 a 8 horas, uma vez por mês?", help:"Terapeutas, famílias e professores juntos a criar materiais, ao estilo Startup Weekend.", opts:[["sim","Sim"],["talvez","Talvez"],["nao","Não"]]},
+  {id:"c_bootdia", s:4, type:"multi", when:a=>a.c_boot&&a.c_boot!=="nao", label:"Que horário lhe dá mais jeito?", opts:[["sabm","Sábado de manhã"],["sabd","Sábado, dia inteiro"],["sext","Sexta à tarde"],["semana","Um dia de semana"]]},
+  {id:"c_preco", s:4, type:"single", label:{terapeuta:"Quanto pagaria por mês por materiais feitos à medida das suas sessões?", professor:"Quanto pagaria por mês, você ou a escola, por materiais para a sala de aula?", familia:"Quanto pagaria por mês por materiais para usar em casa?"}, opts:PRECO},
+  {id:"p_pagador", s:4, aud:[PR], type:"single", label:"Quem pagaria, na sua escola?", opts:[["eu","Eu"],["escola","A escola"],["pais","Os pais"],["patrocinio","Um patrocinador"]]},
+
+  // Passo 5 — Fim
+  {id:"c_pedido", s:5, type:"text", label:{terapeuta:"Descreva uma tarefa da sua semana que gostaria que o LAB resolvesse.", professor:"Que material faria mais diferença na sua sala de aula?", familia:"Que material ajudaria mais em casa?"}, help:"Por exemplo: “Uma história social sobre cortar o cabelo, com fotos do salão do bairro.” Não escreva nomes de crianças."},
+  {id:"c_sugestao", s:5, type:"text", label:"Alguma preocupação ou sugestão?", small:true},
+  {id:"c_contacto", s:5, type:"contacto", label:"Quer testar os primeiros protótipos?"},
+  {id:"c_consent", s:5, type:"consent", req:true, label:"Consentimento"}
+];
+
+/* ---------- Ligação à folha de respostas (Google Apps Script) ---------- */
+// URL da aplicação Web do Apps Script (termina em /exec). Vazio = recolha online ainda não activa.
+const SHEETS_URL = "";
+
+/* ---------- Estado ---------- */
+const st = {aud:null, step:0, a:{}, entrevista:false, enviado:false, existente:false, emFila:false};
+const db=null; // a versão pública não usa a base de dados do Claude
+const reais = {remotas:[], local:[]};
+const painel = {estado:"fechado", erro:"", actualizado:null};
+function uuid(){ try{ return crypto.randomUUID(); }catch(e){ return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{ const r=Math.random()*16|0; return (c==="x"?r:(r&3|8)).toString(16); }); } }
+let meuId = (()=>{ try{ let v=localStorage.getItem("el-id"); if(!v){ v=uuid(); localStorage.setItem("el-id",v); } return v; }catch(e){ return uuid(); } })();
+const chave = ()=>{ try{ return localStorage.getItem("el-chave")||""; }catch(e){ return ""; } };
+const temChave = ()=>!!chave() && painel.estado==="aberto";
+async function chamar(corpo, ms){
+  const ctl=new AbortController(); const t=setTimeout(()=>ctl.abort(),ms||20000);
+  try{
+    // text/plain evita o pedido prévio de CORS, que o Apps Script não suporta.
+    const res=await fetch(SHEETS_URL,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(corpo),signal:ctl.signal});
+    if(!res.ok) throw new Error("Erro do servidor ("+res.status+").");
+    const d=await res.json(); if(!d.ok) throw Object.assign(new Error(d.error||"Resposta inválida."),{servidor:true});
+    return d;
+  } finally { clearTimeout(t); }
+}
+// Fila de envios: com a internet em baixo, a resposta fica no dispositivo e segue quando a ligação voltar.
+const fila = ()=>lerLocal("el-fila",[]);
+async function esvaziarFila(){
+  if(!SHEETS_URL) return;
+  let q=fila(); if(!q.length) return;
+  const resto=[];
+  for(const item of q){ try{ await chamar({acao:"guardar",...item}); }catch(e){ if(!e.servidor) resto.push(item); } }
+  gravarLocal("el-fila",resto);
+}
+const pf = {aud:"todas", fonte:null};
+
+function lerLocal(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }
+function gravarLocal(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+const rasc = lerLocal("el-rascunho",null);
+if(rasc&&rasc.aud){ st.aud=rasc.aud; st.a=rasc.a||{}; }
+reais.local = lerLocal("el-respostas-local",[]);
+
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const L = q=> typeof q.label==="string"?q.label:q.label[st.aud];
+const qsDo = s=>Q.filter(q=>q.s===s && (!q.aud||q.aud.includes(st.aud)));
+const visivel = q=> !q.when || q.when(st.a);
+function toast(t){ const el=$("#toast"); el.textContent=t; el.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>el.hidden=true,3200); }
+function etiqueta(a){ return `<span class="el-etiqueta el-etiqueta--${a}">${AUD[a].plural}</span>`; }
+const SELO = `<div class="el-selo" role="img" aria-label="Sem dados das crianças: trabalhamos só com o trabalho do terapeuta"><svg viewBox="0 0 36 36" aria-hidden="true"><circle class="c" cx="18" cy="18" r="14"/><circle class="p" cx="18" cy="18" r="5"/><path class="c" d="M8 28 L28 8"/></svg><span class="el-selo__t"><span class="el-selo__titulo">Sem dados das crianças</span><span class="el-selo__sub">Trabalhamos só com o trabalho do terapeuta</span></span></div>`;
+const ARCO = `<svg class="arco" viewBox="-90 -90 180 180" aria-hidden="true"><path d="M-22.6 8.2A24 24 0 1 1 22.6 8.2" fill="none" class="s-mel" stroke-width="12" stroke-linecap="round"/><path d="M-47.8 4.2A48 48 0 0 1 43.5 -20.3" fill="none" class="s-mangal" stroke-width="12" stroke-linecap="round"/><path d="M-70.9 -12.5A72 72 0 0 1 24.6 -67.7" fill="none" class="s-atl" stroke-width="12" stroke-linecap="round"/><circle r="11" class="f-barro"/></svg>`;
+
+/* ---------- Ecrãs do questionário ---------- */
+function render(){
+  const e=$("#ecra");
+  if(st.enviado) e.innerHTML=ecraObrigado();
+  else if(st.step===0) e.innerHTML=ecraInicio();
+  else e.innerHTML=ecraPasso();
+  if(!st.enviado && st.step>0){ preencher(); actualizarVisiveis(); }
+}
+
+function ecraInicio(){
+  const entrevistaUI = temChave() ?`<label class="entrevista"><input type="checkbox" id="chk-entrevista" ${st.entrevista?"checked":""}> Modo entrevista: vou registar as respostas de outra pessoa</label>` : "";
+  return `
+  <div class="el-pontos"><div class="wrap abertura"><div class="abertura__grid">
+    <div class="abertura__txt">
+      <span class="el-num" style="align-self:flex-start">Validação · Out 2026</span>
+      <h1>Ajude-nos a construir o LAB certo</h1>
+      <p class="lead">A Espectro LAB quer pôr a inteligência artificial ao serviço de quem trabalha com pessoas autistas. O terapeuta descreve uma tarefa e o LAB ajuda a produzir o material: fichas para imprimir, pequenas apps, jogos, imagens, vídeos e músicas, para usar online e offline.</p>
+      <p class="suave">Antes de construir, queremos ouvir terapeutas, professores e famílias. São cerca de 7 minutos.</p>
+      <div class="meta-linha">${SELO}</div>
+    </div>
+    <div class="fluxo" aria-label="Como funciona o LAB">
+      <div class="fluxo__passo"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 12h44a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H30l-12 10V42h-8a6 6 0 0 1-6-6V18a6 6 0 0 1 6-6z" class="f-barro-t" style="stroke:var(--barro-texto);stroke-width:2.5"/><circle cx="22" cy="27" r="3" class="f-barro"/><rect x="30" y="25" width="20" height="4" rx="2" class="f-noite"/></svg><div><b>1. O terapeuta pede</b><span>“Preciso de uma agenda visual para a ida ao dentista.”</span></div></div>
+      <div class="fluxo__passo"><svg viewBox="-90 -90 180 180" aria-hidden="true"><path d="M-22.6 8.2A24 24 0 1 1 22.6 8.2" fill="none" class="s-mel" stroke-width="12" stroke-linecap="round"/><path d="M-47.8 4.2A48 48 0 0 1 43.5 -20.3" fill="none" class="s-mangal" stroke-width="12" stroke-linecap="round"/><path d="M-70.9 -12.5A72 72 0 0 1 24.6 -67.7" fill="none" class="s-atl" stroke-width="12" stroke-linecap="round"/><circle r="11" class="f-barro"/></svg><div><b>2. O LAB constrói</b><span>Com IA e uma equipa de tecnologia, à medida da tarefa.</span></div></div>
+      <div class="fluxo__passo"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="16" cy="32" r="9" class="f-barro"/><circle cx="34" cy="32" r="7.5" fill="none" class="s-mangal" stroke-width="5"/><rect x="46" y="24" width="15" height="15" rx="2" class="f-mel" style="stroke:var(--noite);stroke-width:1.5"/></svg><div><b>3. Usa-se em todo o lado</b><span>Na sessão, em casa e na escola. Com ou sem internet.</span></div></div>
+    </div>
+  </div></div></div>
+  <div class="wrap escolha">
+    <h2>Quem está a responder?</h2>
+    <p class="suave">As perguntas mudam um pouco consoante o seu papel.</p>
+    <div class="audiencias" role="group" aria-label="Escolha o seu perfil">
+      ${ORD.map(k=>`<button type="button" class="aud" data-aud="${k}" aria-pressed="${st.aud===k}">${FORMA[k]}<b>${AUD[k].nome}</b><span>${AUD[k].desc}</span></button>`).join("")}
+    </div>
+    <div class="inicio-accoes">
+      <button class="el-botao el-botao--primario" id="btn-comecar" ${st.aud?"":"disabled"}>${Object.keys(st.a).length?"Continuar o questionário":"Começar"}</button>
+      ${entrevistaUI}
+      ${st.existente?`<span class="legenda">Já respondeu antes. Pode rever e actualizar as suas respostas.</span>`:""}
+    </div>
+  </div>`;
+}
+
+function htmlQ(q,i){
+  const id=q.id, req=q.req?`<span class="q__req">obrigatória</span>`:"";
+  const ajuda=q.help?`<p class="q__ajuda">${esc(q.help)}</p>`:"";
+  const erro=`<p class="q__erro" id="err-${id}">${q.type==="consent"?"Precisamos do seu consentimento para guardar as respostas.":"Escolha pelo menos uma opção."}</p>`;
+  if(q.type==="info") return `<div class="q" data-id="${id}"><div class="info">
+      <h3>A ideia, em poucas palavras</h3>
+      <p>Uma vez por mês, um bootcamp presencial junta terapeutas, famílias e professores para criar soluções. No resto do mês, o terapeuta pede e o LAB produz os materiais. O LAB não é uma clínica nem uma plataforma de dados de pacientes: trabalha só com o trabalho do terapeuta.</p>
+      ${SELO}</div></div>`;
+  if(q.type==="text") return `<div class="q" data-id="${id}"><label class="q__t" for="f-${id}">${esc(L(q))}</label>${ajuda}<textarea id="f-${id}" name="${id}" ${q.small?'style="min-height:80px"':""}></textarea></div>`;
+  if(q.type==="contacto") return `<div class="q" data-id="${id}"><p class="q__t">${esc(L(q))}</p><p class="q__ajuda">Vamos convidar algumas pessoas para experimentar os primeiros materiais (LAB-001 em diante). É opcional.</p>
+      <label class="caixa"><input type="checkbox" id="f-c_quer" name="c_quer"> Sim, podem contactar-me</label>
+      <div class="campos" id="campos-contacto" hidden><label>Nome<input class="campo" id="f-c_nome" name="c_nome" autocomplete="name"></label><label>Telefone ou email<input class="campo" id="f-c_cont" name="c_cont" autocomplete="email"></label></div></div>`;
+  if(q.type==="consent") return `<div class="q" data-id="${id}"><p class="q__t">Antes de enviar ${req}</p>
+      <label class="caixa"><input type="checkbox" id="f-c_consent" name="c_consent"> Aceito que a equipa da Espectro LAB guarde estas respostas para estudar a ideia. As respostas não incluem dados de crianças e só a equipa as vê.</label>${erro}</div>`;
+  let corpo="";
+  if(q.type==="single"||q.type==="multi"){
+    const t=q.type==="single"?"radio":"checkbox";
+    corpo=`<div class="ops">${q.opts.map(([v,l])=>`<label class="op"><input type="${t}" name="${id}" value="${v}"><span class="op__c">${esc(l)}</span></label>`).join("")}</div>`;
+  } else if(q.type==="pic"){
+    const t=q.multi?"checkbox":"radio";
+    corpo=`<div class="ops ops--pic ${q.cols===4?"ops--4":""}">${q.opts.map(([v,l,k,sub])=>`<label class="op op--pic"><input type="${t}" name="${id}" value="${v}"><span class="op__c"><span class="op__ill">${ILL[k]}</span><span class="op__txt">${esc(l)}${sub?`<br><span class="op__sub">${esc(sub)}</span>`:""}</span></span></label>`).join("")}</div>`;
+  } else if(q.type==="icon"){
+    corpo=`<div class="ops ops--icon">${q.opts.map(([v,l,k])=>`<label class="op"><input type="checkbox" name="${id}" value="${v}"><span class="op__c">${pic(k)}<span>${esc(l)}</span></span></label>`).join("")}</div>`;
+  } else if(q.type==="scale"||q.type==="nps"){
+    const a=q.type==="nps"?0:1, b=q.type==="nps"?10:5, arr=[]; for(let n=a;n<=b;n++) arr.push(n);
+    const ex = q.pre==="exemplo" ? exemploCartao() : "";
+    corpo=`${ex}<div class="escala">${arr.map(n=>`<label class="op"><input type="radio" name="${id}" value="${n}" aria-label="${n}"><span class="op__c">${n}</span></label>`).join("")}</div><div class="escala__ext" aria-hidden="true"><span>${esc(q.min[1])}</span><span>${esc(q.max[1])}</span></div>`;
+  }
+  return `<fieldset class="q" data-id="${id}" aria-describedby="err-${id}"><legend>${esc(L(q))}${req}</legend>${ajuda}${corpo}${erro}</fieldset>`;
+}
+
+function exemploCartao(){
+  const passos=[["sol","Acordar"],["dentes","Lavar os dentes"],["comer","Matabicho"],["mochila","Mochila"]];
+  return `<article class="exemplo-cartao" aria-label="Exemplo de material: agenda visual da manhã">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="el-etiqueta el-etiqueta--familia">Famílias</span><span class="el-num">LAB-001</span></div>
+    <h3>Agenda visual da manhã</h3>
+    <div class="exemplo-cartao__pic">${passos.map(([k,l])=>`<div>${pic(k)}<br>${l}</div>`).join("")}</div>
+    <p class="legenda">Imprimir em A4 mate · 1 página · funciona offline</p>
+  </article>`;
+}
+
+function ecraPasso(){
+  const s=st.step, qs=qsDo(s);
+  return `<div class="wrap passos"><div class="col">
+    <div class="progresso">
+      <div class="progresso__topo"><span class="rotulo suave">Passo ${s} de ${STEPS.length} · ${esc(STEPS[s-1].t)}</span>${etiqueta(st.aud)}</div>
+      <div class="progresso__barras" aria-hidden="true">${STEPS.map((_,i)=>`<i class="${i<s?"on":""}"></i>`).join("")}</div>
+    </div>
+    ${st.entrevista?`<div class="aviso aviso--mel" style="margin-bottom:var(--espaco-3)"><b>Modo entrevista.</b> Está a registar as respostas de outra pessoa.</div>`:""}
+    <div class="passo__cab"><h2>${esc(STEPS[s-1].t)}</h2><p class="suave">${esc(STEPS[s-1].d)}</p></div>
+    <form id="form" novalidate>${qs.map(htmlQ).join("")}</form>
+    <div class="navpassos">
+      <button class="el-botao el-botao--secundario" id="btn-ant">${s===1?"Mudar de perfil":"Anterior"}</button>
+      <button class="el-botao el-botao--primario" id="btn-seg">${s===STEPS.length?"Enviar respostas":"Seguinte"}</button>
+    </div>
+  </div></div>`;
+}
+
+function ecraObrigado(){
+  return `<div class="wrap obrigado"><div class="col obrigado__c">
+    ${ARCO}
+    <h1>Obrigado. A sua resposta foi guardada.</h1>
+    <p class="lead" style="font-size:19px;line-height:30px">Vamos usar o que nos disse para decidir que materiais construir primeiro e como organizar o primeiro bootcamp.</p>
+    ${st.emFila?`<div class="aviso aviso--mel"><span><b>Sem ligação à internet.</b> A resposta ficou guardada neste telemóvel e segue sozinha da próxima vez que abrir esta página com internet.</span></div>`:""}
+    ${!SHEETS_URL?`<div class="aviso"><span><b>Recolha online ainda não activa.</b> A resposta ficou só neste dispositivo.</span></div>`:""}
+    <div class="inicio-accoes">
+      ${st.entrevista?`<button class="el-botao el-botao--primario" id="btn-nova">Registar outra entrevista</button>`:`<button class="el-botao el-botao--secundario" id="btn-rever">Rever as minhas respostas</button>`}
+    </div>
+  </div></div>`;
+}
+
+function preencher(){
+  const f=$("#form"); if(!f) return;
+  for(const [k,v] of Object.entries(st.a)){
+    if(Array.isArray(v)) v.forEach(x=>{ const i=f.querySelector(`input[name="${k}"][value="${x}"]`); if(i) i.checked=true; });
+    else if(k==="c_contacto"&&v){ const c=$("#f-c_quer"); if(c) c.checked=!!v.quer; if($("#f-c_nome")) $("#f-c_nome").value=v.nome||""; if($("#f-c_cont")) $("#f-c_cont").value=v.cont||""; }
+    else if(k==="c_consent"){ const c=$("#f-c_consent"); if(c) c.checked=!!v; }
+    else { const i=f.querySelector(`input[name="${k}"][value="${CSS.escape(String(v))}"]`); if(i) i.checked=true; const t=f.querySelector(`textarea[name="${k}"]`); if(t) t.value=v; }
+  }
+  qsDo(st.step).forEach(limitar);
+}
+function ler(q){
+  const f=$("#form");
+  if(q.type==="text") return f.querySelector(`[name="${q.id}"]`).value.trim();
+  if(q.type==="contacto") return {quer:$("#f-c_quer").checked, nome:$("#f-c_nome").value.trim(), cont:$("#f-c_cont").value.trim()};
+  if(q.type==="consent") return $("#f-c_consent").checked;
+  if(q.type==="multi"||q.type==="icon"||(q.type==="pic"&&q.multi)) return [...f.querySelectorAll(`input[name="${q.id}"]:checked`)].map(i=>i.value);
+  const c=f.querySelector(`input[name="${q.id}"]:checked`); if(!c) return undefined;
+  return (q.type==="scale"||q.type==="nps")?Number(c.value):c.value;
+}
+function limitar(q){
+  if(!q.max) return;
+  const box=[...document.querySelectorAll(`#form input[name="${q.id}"]`)];
+  const n=box.filter(i=>i.checked).length;
+  box.forEach(i=>{ if(!i.checked) i.disabled=n>=q.max; });
+}
+function actualizarVisiveis(){
+  qsDo(st.step).forEach(q=>{ const el=document.querySelector(`.q[data-id="${q.id}"]`); if(el) el.hidden=!visivel(q); });
+  const c=$("#campos-contacto"); if(c) c.hidden=!$("#f-c_quer").checked;
+}
+function guardarRascunho(){ if(!st.entrevista) gravarLocal("el-rascunho",{aud:st.aud,a:st.a}); }
+function vazio(v){ return v===undefined||v===""||v===false||(Array.isArray(v)&&!v.length); }
+function validar(){
+  let primeiro=null;
+  qsDo(st.step).forEach(q=>{
+    const el=document.querySelector(`.q[data-id="${q.id}"]`); if(!el) return;
+    const mau = q.req && visivel(q) && vazio(st.a[q.id]);
+    el.classList.toggle("q--erro",mau);
+    if(mau&&!primeiro) primeiro=el;
+  });
+  if(primeiro){ primeiro.scrollIntoView({behavior:"smooth",block:"center"}); const i=primeiro.querySelector("input,textarea"); if(i) i.focus({preventScroll:true}); return false; }
+  return true;
+}
+
+async function enviar(){
+  const a={};
+  for(const q of Q){ if(q.aud&&!q.aud.includes(st.aud)) continue; if(!visivel(q)) continue; if(st.a[q.id]!==undefined) a[q.id]=st.a[q.id]; }
+  const doc={aud:st.aud, a, ts:new Date().toISOString(), modo:st.entrevista?"entrevista":"proprio", v:1};
+  const item={id:st.entrevista?uuid():meuId, doc};
+  const btn=$("#btn-seg"); if(btn){ btn.disabled=true; btn.textContent="A enviar…"; }
+  st.emFila=false;
+  if(!SHEETS_URL){ reais.local.push(doc); gravarLocal("el-respostas-local",reais.local); }
+  else {
+    try{ await chamar({acao:"guardar",...item}); }
+    catch(err){
+      if(err.servidor){ if(btn){ btn.disabled=false; btn.textContent="Enviar respostas"; } toast(err.message); return; }
+      const q=fila().filter(x=>x.id!==item.id); q.push(item); gravarLocal("el-fila",q); st.emFila=true;
+    }
+  }
+  st.enviado=true; if(!st.entrevista){ st.existente=true; gravarLocal("el-minha",{aud:st.aud,a:st.a}); try{ localStorage.removeItem("el-rascunho"); }catch(e){} }
+  render(); window.scrollTo({top:0});
+  if(temChave()) carregarPainel();
+}
+
+document.addEventListener("click",e=>{
+  const aud=e.target.closest(".aud");
+  if(aud){ const novo=aud.dataset.aud; if(novo!==st.aud){ st.aud=novo; if(!st.existente) st.a={}; } render(); return; }
+  if(e.target.closest("#btn-comecar")){ st.step=1; render(); window.scrollTo({top:0}); return; }
+  if(e.target.closest("#btn-ant")){ st.step--; render(); window.scrollTo({top:0}); return; }
+  if(e.target.closest("#btn-seg")){ if(!validar()) return; if(st.step===STEPS.length) enviar(); else { st.step++; render(); window.scrollTo({top:0}); } return; }
+  if(e.target.closest("#btn-nova")){ st.a={}; st.aud=null; st.step=0; st.enviado=false; render(); window.scrollTo({top:0}); return; }
+  if(e.target.closest("#btn-rever")){ st.enviado=false; st.step=1; render(); window.scrollTo({top:0}); return; }
+  const tab=e.target.closest(".tab"); if(tab){ mostrar(tab.id==="tab-p"?"p":"q"); return; }
+});
+document.addEventListener("change",e=>{
+  if(e.target.id==="chk-entrevista"){ st.entrevista=e.target.checked; if(st.entrevista){ st.a={}; st.aud=null; } render(); return; }
+  onInput(e);
+});
+document.addEventListener("input",e=>{ if(e.target.matches("textarea,.campo")) onInput(e); });
+function onInput(e){
+  if(!e.target.closest("#form")) return;
+  const name=e.target.name; let q=Q.find(x=>x.id===name);
+  if(!q && ["c_quer","c_nome","c_cont"].includes(name)) q=Q.find(x=>x.id==="c_contacto");
+  if(!q) return;
+  st.a[q.id]=ler(q); limitar(q);
+  const el=document.querySelector(`.q[data-id="${q.id}"]`); if(el&&!vazio(st.a[q.id])) el.classList.remove("q--erro");
+  actualizarVisiveis(); guardarRascunho();
+}
+
+/* ---------- Painel ---------- */
+function mostrar(v){
+  if(v==="p") $("#tab-p").hidden=false;
+  $("#tab-q").setAttribute("aria-selected",v==="q"); $("#tab-p").setAttribute("aria-selected",v==="p");
+  $("#vista-q").hidden=v!=="q"; $("#vista-p").hidden=v!=="p";
+  if(v==="p") desenharPainel();
+}
+
+// Dados de exemplo gerados aqui, marcados como tal: servem só para ver o painel antes das respostas reais.
+function exemplo(){
+  let s=20261029; const r=()=>((s=(s*1664525+1013904223)>>>0)/4294967296);
+  const pk=(arr,w)=>{ let t=r()*w.reduce((a,b)=>a+b,0); for(let i=0;i<arr.length;i++){ t-=w[i]; if(t<=0) return arr[i]; } return arr[arr.length-1]; };
+  const mk=(arr,ps)=>arr.filter((_,i)=>r()<ps[i]);
+  const pedidos={
+    terapeuta:["História social sobre a ida ao dentista, com fotos de um consultório de Luanda.","Agenda visual da sessão que eu possa mudar no telemóvel antes de cada criança chegar.","Jogo de emparelhar emoções com caras de pessoas angolanas.","Temporizador visual que funcione sem internet no tablet da clínica.","Fichas de terapia da fala com palavras em português de Angola e em kimbundu."],
+    professor:["Agenda visual da turma para colar no quadro.","Uma história social sobre o recreio e o barulho da cantina.","Fichas de avaliação adaptadas com pictogramas.","Cartões para pedir ajuda ou pausa sem falar."],
+    familia:["Rotina da manhã para colar na porta do quarto.","Uma música para a hora do banho.","Ajuda para a ida ao mercado e esperar na fila.","Vídeo curto a mostrar como cortar o cabelo, para preparar a ida ao barbeiro."]
+  };
+  const out=[]; const n={terapeuta:22,professor:14,familia:18};
+  ORD.forEach(aud=>{ for(let i=0;i<n[aud];i++){
+    const a={};
+    a.c_prov=pk(["luanda","benguela","huila","huambo","outra"],[70,10,8,6,6]);
+    a.c_horas=pk(HORAS.map(h=>h[0]), aud===T?[5,20,32,28,15]:aud===PR?[15,35,28,15,7]:[12,30,28,20,10]);
+    a.c_origem=mk(["mao","net","arasaac","compro","terapeuta","escola","apps"],aud===T?[.8,.85,.4,.25,0,.05,.2]:aud===PR?[.7,.75,.15,.2,.2,.3,.1]:[.4,.6,.05,.25,.5,.2,.3]);
+    a.c_dores=mk(["tempo","lingua","custo","ferramentas","infra","personalizar","continuidade","saber"],aud===T?[.75,.45,.35,.3,.25,.5,.3,.05]:aud===PR?[.5,.35,.4,.35,.2,.35,.45,.45]:[.3,.25,.45,.35,.3,.3,.45,.55]).slice(0,3);
+    a.c_disp=mk(["android","iphone","tablet","pc","impressora"],[.85,.2,.3,aud===F?.3:.65,aud===T?.45:.2]);
+    a.c_net=pk(["sempre","falha","dados","raro"],[30,40,22,8]);
+    a.c_formatos=mk(["agenda","historia","jogo","app","video","musica"],aud===T?[.7,.6,.45,.35,.25,.15]:aud===PR?[.75,.5,.45,.2,.25,.2]:[.65,.35,.35,.3,.45,.35]).slice(0,3);
+    if(!a.c_formatos.length) a.c_formatos=["agenda"];
+    a.c_agenda=pk(["cor","pb","foto","depende"],[42,14,22,22]);
+    a.c_util=pk([3,4,5],[15,40,45]);
+    a.c_entrega=mk(["a4","cartoes","tablet","telemovel"],[.55,.45,.25,aud===F?.7:.4]);
+    a.c_ellis=pk(["muito","algo","indif"],aud===T?[48,40,12]:aud===PR?[35,48,17]:[44,42,14]);
+    a.c_nps=pk([5,6,7,8,9,10],[5,8,15,22,25,25]);
+    a.c_priv=pk([3,4,5],[10,25,65]);
+    a.c_boot=pk(["sim","talvez","nao"],aud===T?[55,35,10]:aud===PR?[35,45,20]:[40,40,20]);
+    if(a.c_boot!=="nao") a.c_bootdia=mk(["sabm","sabd","sext","semana"],[.7,.25,.3,.15]);
+    a.c_preco=pk(PRECO.map(p=>p[0]),aud===T?[10,35,35,15,5]:aud===PR?[30,40,20,8,2]:[25,40,25,8,2]);
+    if(aud===T){ a.t_area=pk(["fala","ocup","psi","psicomot","aba","edesp"],[30,20,25,10,8,7]); a.t_ia=pk(["freq","exp","curioso","reservas"],[12,30,43,15]); }
+    if(aud===F){ a.f_rotinas=mk(["acordar","higiene","refeicoes","vestir","sair","esperar","dormir","brincar"],[.4,.55,.5,.3,.45,.6,.5,.25]); a.f_idade=pk(["0a3","4a6","7a12","13a17"],[15,35,35,15]); }
+    if(r()<.55) a.c_pedido=pedidos[aud][Math.floor(r()*pedidos[aud].length)];
+    if(r()<.35) a.c_contacto={quer:true,nome:"Exemplo "+(out.length+1),cont:"(exemplo)"};
+    const d=new Date(2026,9,1+Math.floor(r()*28),9+Math.floor(r()*10));
+    out.push({aud,a,ts:d.toISOString(),modo:r()<.3?"entrevista":"proprio",exemplo:true});
+  }});
+  return out;
+}
+const EXEMPLO = exemplo();
+
+function todasReais(){ return [...reais.remotas,...(SHEETS_URL?[]:reais.local)]; }
+async function carregarPainel(){
+  if(!SHEETS_URL){ painel.estado="aberto"; desenharPainel(); return; }
+  if(!chave()){ painel.estado="fechado"; desenharPainel(); return; }
+  painel.estado=painel.estado==="aberto"?"aberto":"a-entrar"; painel.erro=""; desenharPainel();
+  try{
+    const d=await chamar({acao:"listar",chave:chave()},30000);
+    reais.remotas=(d.respostas||[]).filter(r=>r&&AUD[r.aud]&&r.a);
+    painel.estado="aberto"; painel.actualizado=new Date();
+    if(pf.fonte===null||(!pf._mudou&&reais.remotas.length)){ pf.fonte=reais.remotas.length?"reais":"exemplo"; pf._mudou=true; }
+  }catch(e){
+    if(e.servidor){ try{ localStorage.removeItem("el-chave"); }catch(_){} painel.estado="fechado"; painel.erro="Chave errada. Confirme a chave que está no script da folha de respostas."; }
+    else { painel.erro="Não foi possível ligar à folha de respostas. Verifique a internet e tente outra vez."; if(painel.estado!=="aberto") painel.estado="fechado"; }
+  }
+  desenharPainel(); if(st.step===0&&!st.enviado) render();
+}
+function ecraEntrar(){
+  return `<div class="entrar">
+    <span class="rotulo suave">Área da equipa</span>
+    <h2>Painel de validação</h2>
+    <p class="suave">Escreva a chave do painel para ver as respostas. A chave está no script da folha de respostas, no Google Drive da equipa.</p>
+    <form id="form-chave"><label class="sr" for="f-chave">Chave do painel</label><input class="campo" id="f-chave" type="password" autocomplete="current-password" placeholder="Chave do painel" required><button class="el-botao el-botao--primario" ${painel.estado==="a-entrar"?"disabled":""}>${painel.estado==="a-entrar"?"A entrar…":"Entrar"}</button></form>
+    ${painel.erro?`<p style="color:var(--barro-texto);font-weight:600;font-size:15px">${esc(painel.erro)}</p>`:""}
+    <p class="legenda">Quem responde ao questionário nunca vê este painel nem as respostas dos outros.</p>
+  </div>`;
+}
+
+const pct=(a,b)=>b?Math.round(a/b*100):0;
+function contar(rows,qid,opts){
+  const resp=rows.filter(r=>!vazio(r.a[qid]));
+  const linhas=opts.map(([v,l])=>{ const c={terapeuta:0,professor:0,familia:0}; resp.forEach(r=>{ const x=r.a[qid]; if(Array.isArray(x)?x.includes(v):String(x)===String(v)) c[r.aud]++; }); return {v,l,c,t:c.terapeuta+c.professor+c.familia}; });
+  return {n:resp.length, linhas};
+}
+function barras(rows,qid,opts,ordenar){
+  const {n,linhas}=contar(rows,qid,opts);
+  if(!n) return `<p class="legenda">Ainda sem respostas a esta pergunta.</p>`;
+  const ls=ordenar?[...linhas].sort((a,b)=>b.t-a.t):linhas;
+  const uma=pf.aud!=="todas";
+  return `<div class="barras">${ls.map(x=>{
+    const segs=uma?`<i class="uma" style="width:${x.t/n*100}%" data-tip="${esc(x.l)}: ${x.t} de ${n} (${pct(x.t,n)}%)"></i>`
+      :ORD.filter(a=>x.c[a]).map(a=>`<i class="${a}" style="width:${x.c[a]/n*100}%" data-tip="${esc(x.l)} · ${AUD[a].plural}: ${x.c[a]} de ${n}"></i>`).join("");
+    return `<div class="barra"><span class="barra__l">${esc(x.l)}</span><span class="barra__t">${segs}</span><span class="barra__v">${pct(x.t,n)}% <small>· ${x.t}</small></span></div>`;
+  }).join("")}</div><p class="legenda">Percentagem de quem respondeu a esta pergunta (n = ${n}).${(q=>q&&(q.type==="multi"||q.type==="icon"||(q.type==="pic"&&q.multi)))(Q.find(q=>q.id===qid))?" Escolha múltipla: as percentagens somam mais de 100%.":""}</p>`;
+}
+const ICON_OK='<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.5l2.5 2.5L11 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ICON_PERTO='<svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 2a5 5 0 0 1 0 10z" fill="currentColor"/></svg>';
+const ICON_ABAIXO='<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 3v5M7 10.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+function estado(v,meta){ if(v>=meta) return `<span class="estado estado--ok">${ICON_OK}Atingido</span>`; if(v>=meta*.75) return `<span class="estado estado--perto">${ICON_PERTO}Perto</span>`; return `<span class="estado estado--abaixo">${ICON_ABAIXO}Abaixo</span>`; }
+function mediana(xs){ if(!xs.length) return 0; const s=[...xs].sort((a,b)=>a-b), m=s.length>>1; return s.length%2?s[m]:(s[m-1]+s[m])/2; }
+const fmt=n=>String(n).replace(".",",");
+
+function desenharPainel(){
+  const el=$("#painel"); if(!el) return;
+  if(SHEETS_URL && painel.estado!=="aberto"){ el.innerHTML=ecraEntrar(); return; }
+  const rs=todasReais();
+  if(pf.fonte===null) pf.fonte=rs.length?"reais":"exemplo";
+  const base=pf.fonte==="reais"?rs:EXEMPLO;
+  const rows=pf.aud==="todas"?base:base.filter(r=>r.aud===pf.aud);
+  const por=a=>base.filter(r=>r.aud===a);
+  const ter=por(T);
+
+  const ell=rows.filter(r=>r.a.c_ellis), ellM=pct(ell.filter(r=>r.a.c_ellis==="muito").length,ell.length);
+  const nps=rows.filter(r=>r.a.c_nps!==undefined), pro=nps.filter(r=>r.a.c_nps>=9).length, det=nps.filter(r=>r.a.c_nps<=6).length;
+  const npsV=nps.length?Math.round((pro-det)/nps.length*100):0;
+  const boot=rows.filter(r=>r.a.c_boot), bootS=pct(boot.filter(r=>r.a.c_boot==="sim").length,boot.length), bootT=pct(boot.filter(r=>r.a.c_boot==="talvez").length,boot.length);
+  const hrs=rows.filter(r=>r.a.c_horas).map(r=>HORAS_V[r.a.c_horas]);
+  const pre=rows.filter(r=>r.a.c_preco), pre5=pct(pre.filter(r=>!["0","ate5"].includes(r.a.c_preco)).length,pre.length);
+  const priv=rows.filter(r=>r.a.c_priv), privM=priv.length?priv.reduce((s,r)=>s+r.a.c_priv,0)/priv.length:0;
+
+  // Critérios de validação (sobre toda a amostra da fonte escolhida)
+  const tH=ter.filter(r=>r.a.c_horas), tH3=pct(tH.filter(r=>["3a5","5a10","gt10"].includes(r.a.c_horas)).length,tH.length);
+  const allE=base.filter(r=>r.a.c_ellis), allEM=pct(allE.filter(r=>r.a.c_ellis==="muito").length,allE.length);
+  const tB=ter.filter(r=>r.a.c_boot), tBS=pct(tB.filter(r=>r.a.c_boot==="sim").length,tB.length);
+  const allP=base.filter(r=>r.a.c_preco), allP5=pct(allP.filter(r=>!["0","ate5"].includes(r.a.c_preco)).length,allP.length);
+  const allPr=base.filter(r=>r.a.c_priv), allPrM=allPr.length?allPr.reduce((s,r)=>s+r.a.c_priv,0)/allPr.length:0;
+  const crit=[
+    ["Amostra de terapeutas", `${ter.length} de 30 respostas`, ter.length/30, "A âncora do LAB. Sem 30 terapeutas, o resto não decide nada."],
+    ["Amostra de professores e famílias", `${por(PR).length} de 20 professores · ${por(F).length} de 20 famílias`, Math.min(por(PR).length,por(F).length)/20, "Mínimo de 20 em cada grupo."],
+    ["O problema existe", `${tH3}% dos terapeutas gastam 3 horas ou mais por semana (meta 60%)`, tH3/60, "Tempo gasto a preparar materiais."],
+    ["Desejo pelo produto", `${allEM}% ficariam muito desiludidos sem o LAB (meta 40%)`, allEM/40, "Teste de Sean Ellis: acima de 40% indica encaixe produto-mercado."],
+    ["Interesse no bootcamp", `${tBS}% dos terapeutas dizem que sim (meta 50%)`, tBS/50, "O formato presencial mensal depende disto."],
+    ["Disposição para pagar", `${allP5}% pagariam 5 000 Kz ou mais por mês (meta 30%)`, allP5/30, "Primeiro sinal de receita fora de patrocínios."],
+    ["Confiança", `Média de ${fmt(allPrM.toFixed(1))} em 5 na importância de não usar dados das crianças (meta 4)`, allPrM/4, "Confirma o princípio como mensagem central."]
+  ];
+
+  const nReais=rs.length;
+  const pedidos=rows.filter(r=>r.a.c_pedido).sort((a,b)=>b.ts.localeCompare(a.ts)).slice(0,40);
+  const contactos=rows.filter(r=>r.a.c_contacto&&r.a.c_contacto.quer);
+  const qF=Q.find(q=>q.id==="c_formatos"), qD=Q.find(q=>q.id==="c_dores"), qA=Q.find(q=>q.id==="c_agenda"), qE=Q.find(q=>q.id==="c_entrega"), qN=Q.find(q=>q.id==="c_net"), qPr=Q.find(q=>q.id==="c_preco"), qBd=Q.find(q=>q.id==="c_bootdia"), qR=Q.find(q=>q.id==="f_rotinas"), qO=Q.find(q=>q.id==="c_origem"), qH=Q.find(q=>q.id==="c_horas");
+
+  el.innerHTML=`
+  <div class="painel__cab">
+    <div style="display:flex;flex-direction:column;gap:6px"><span class="rotulo suave">Só a equipa vê este painel</span><h2>Painel de validação</h2></div>
+    <div class="filtros">
+      <div class="seg" role="group" aria-label="Audiência">${[["todas","Todas"],...ORD.map(a=>[a,AUD[a].plural])].map(([k,l])=>`<button data-faud="${k}" aria-pressed="${pf.aud===k}">${l}</button>`).join("")}</div>
+      <div class="seg" role="group" aria-label="Fonte dos dados"><button data-fonte="reais" aria-pressed="${pf.fonte==="reais"}">Respostas reais (${nReais})</button><button data-fonte="exemplo" aria-pressed="${pf.fonte==="exemplo"}">Dados de exemplo</button></div>
+    </div>
+  </div>
+  ${pf.fonte==="exemplo"?`<div class="banda-exemplo"><span><b>Dados de exemplo.</b> Estes números foram gerados para mostrar o painel e não são respostas reais.${nReais?"":" Ainda não há respostas reais."}</span>${nReais?`<button class="el-botao el-botao--secundario" data-fonte="reais">Ver respostas reais</button>`:""}</div>`:""}
+  ${!SHEETS_URL?`<div class="aviso"><span><b>Recolha online ainda não activa.</b> Falta ligar a folha de respostas (ver LEIA-ME). Por agora, as respostas reais são só as deste dispositivo.</span></div>`
+    :`<div class="filtros" style="justify-content:space-between"><span class="legenda">${painel.actualizado?"Actualizado às "+painel.actualizado.toLocaleTimeString("pt-PT",{hour:"2-digit",minute:"2-digit"}):""}${painel.erro?" · "+esc(painel.erro):""}</span><span style="display:flex;gap:8px;flex-wrap:wrap"><button class="el-botao el-botao--secundario" id="btn-actualizar">Actualizar</button><button class="el-botao el-botao--secundario" id="btn-sair">Sair do painel</button></span></div>`}
+
+  <div class="kpis">
+    <div class="kpi"><span class="rotulo suave">Respostas</span><span class="kpi__v">${rows.length}</span><div class="kpi__meta">${ORD.map(a=>`<span style="display:inline-flex;align-items:center;gap:6px"><i class="forma forma--${a}"></i>${base.filter(r=>r.aud===a).length} ${AUD[a].plural.toLowerCase()}</span>`).join("")}</div></div>
+    <div class="kpi"><span class="rotulo suave">Muito desiludidos sem o LAB</span><span class="kpi__v">${ellM}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${Math.min(ellM,100)}%"></i><b style="left:40%"></b></div><div class="kpi__meta">Meta 40% · n = ${ell.length} ${estado(ellM,40)}</div></div>
+    <div class="kpi"><span class="rotulo suave">Recomendação (NPS)</span><span class="kpi__v">${npsV>0?"+":""}${npsV}</span>
+      <div class="nps-barra" aria-label="Detractores ${pct(det,nps.length)}%, neutros ${pct(nps.length-pro-det,nps.length)}%, promotores ${pct(pro,nps.length)}%"><i class="nps-d" style="width:${pct(det,nps.length)}%">${pct(det,nps.length)}%</i><i class="nps-p" style="width:${pct(nps.length-pro-det,nps.length)}%">${pct(nps.length-pro-det,nps.length)}%</i><i class="nps-pr" style="width:${pct(pro,nps.length)}%">${pct(pro,nps.length)}%</i></div>
+      <div class="kpi__meta">Detractores (0–6) · neutros · promotores (9–10)</div></div>
+    <div class="kpi"><span class="rotulo suave">Tempo semanal a preparar materiais</span><span class="kpi__v">${fmt(mediana(hrs))}<small> h</small></span><div class="kpi__meta">Mediana · n = ${hrs.length}</div></div>
+    <div class="kpi"><span class="rotulo suave">Iriam ao bootcamp</span><span class="kpi__v">${bootS}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${bootS}%"></i><b style="left:50%"></b></div><div class="kpi__meta">Mais ${bootT}% talvez · meta 50% ${estado(bootS,50)}</div></div>
+    <div class="kpi"><span class="rotulo suave">Pagariam 5 000 Kz ou mais</span><span class="kpi__v">${pre5}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${pre5}%"></i><b style="left:30%"></b></div><div class="kpi__meta">Por mês · meta 30% ${estado(pre5,30)}</div></div>
+  </div>
+
+  <div class="grelha">
+    <div class="bloco g12"><div class="bloco__cab"><h3>Critérios para avançar</h3><span class="legenda">Calculados sobre todas as respostas da fonte escolhida</span></div>
+      <div class="criterios">${crit.map(([t,v,r,d])=>`<div class="criterio"><span class="criterio__t">${t}</span>${estado(r,1)}<span class="criterio__d">${v}. ${d}</span></div>`).join("")}</div></div>
+
+    ${pf.aud==="todas"?`<div class="g12 legenda-aud" aria-label="Legenda">${ORD.map(a=>`<span><i class="forma forma--${a}"></i>${AUD[a].plural}</span>`).join("")}</div>`:""}
+    <div class="bloco g6"><div class="bloco__cab"><h3>Materiais que usariam primeiro</h3></div>${barras(rows,"c_formatos",qF.opts,true)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Maiores dificuldades</h3></div>${barras(rows,"c_dores",qD.opts,true)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Estilo de agenda visual preferido</h3></div>${barras(rows,"c_agenda",qA.opts.map(o=>[o[0],o[1]]),false)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Como querem receber</h3></div>${barras(rows,"c_entrega",qE.opts.map(o=>[o[0],o[1]]),true)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Tempo semanal a preparar materiais</h3></div>${barras(rows,"c_horas",qH.opts,false)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Quanto pagariam por mês</h3></div>${barras(rows,"c_preco",qPr.opts,false)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Acesso à internet</h3><span class="legenda">Decide quanto do LAB tem de funcionar offline</span></div>${barras(rows,"c_net",qN.opts,false)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Onde arranjam os materiais hoje</h3></div>${barras(rows,"c_origem",qO.opts,true)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Melhor horário para o bootcamp</h3></div>${barras(rows,"c_bootdia",qBd.opts,true)}</div>
+    ${pf.aud==="todas"||pf.aud===F?`<div class="bloco g6"><div class="bloco__cab"><h3>Momentos do dia com mais pedido de apoio</h3>${etiqueta(F)}</div>${barras(rows.filter(r=>r.aud===F),"f_rotinas",qR.opts,true)}</div>`:""}
+
+    <div class="bloco g8"><div class="bloco__cab"><h3>Banco de pedidos</h3><span class="legenda">${pedidos.length} pedidos · candidatos a desafios do bootcamp</span></div>
+      <div class="pedidos">${pedidos.length?pedidos.map((r,i)=>`<div class="pedido"><p>“${esc(r.a.c_pedido)}”</p><div class="pedido__m">${etiqueta(r.aud)}<span class="el-num">PEDIDO-${String(pedidos.length-i).padStart(3,"0")}</span></div></div>`).join(""):`<p class="legenda">Os pedidos escritos pelos inquiridos aparecem aqui.</p>`}</div></div>
+    <div class="bloco g4"><div class="bloco__cab"><h3>Querem testar protótipos</h3></div>
+      <span class="kpi__v">${contactos.length}</span>
+      <p class="legenda">Pessoas que deixaram contacto para testar os primeiros materiais.</p>
+      ${contactos.length?`<div class="tabela-wrap" style="max-height:300px;overflow:auto"><table><thead><tr><th>Nome</th><th>Contacto</th><th>Perfil</th></tr></thead><tbody>${contactos.map(r=>`<tr><td>${esc(r.a.c_contacto.nome||"—")}</td><td>${esc(r.a.c_contacto.cont||"—")}</td><td>${AUD[r.aud].nome}</td></tr>`).join("")}</tbody></table></div>`:""}
+    </div>
+
+    <div class="bloco g12"><div class="bloco__cab"><h3>Partilhar o questionário</h3><span class="legenda">Acrescente o perfil ao fim do link para abrir já com a audiência escolhida</span></div>
+      <div class="links">${ORD.map(a=>`<div class="link-aud">${etiqueta(a)}<code>${esc(LINK)}#${a}</code><button class="el-botao el-botao--secundario" data-copiar="${esc(LINK)}#${a}">Copiar link</button></div>`).join("")}</div>
+      <p class="legenda">Link público: qualquer pessoa o pode abrir e responder. Funciona bem no WhatsApp.</p></div>
+
+    <div class="bloco g12"><details><summary>Tabela de respostas (${rows.length})</summary>
+      <div class="tabela-wrap" style="margin-top:16px;max-height:420px;overflow:auto"><table><thead><tr><th>Data</th><th>Perfil</th><th>Modo</th><th>Província</th><th>Horas/semana</th><th>Sem o LAB</th><th>NPS</th><th>Bootcamp</th><th>Preço</th></tr></thead>
+      <tbody>${[...rows].sort((a,b)=>b.ts.localeCompare(a.ts)).map(r=>`<tr><td>${new Date(r.ts).toLocaleDateString("pt-PT")}</td><td>${AUD[r.aud].nome}</td><td>${r.modo==="entrevista"?"Entrevista":"Próprio"}</td><td>${esc(rot("c_prov",r.a.c_prov))}</td><td>${esc(rot("c_horas",r.a.c_horas))}</td><td>${esc(rot("c_ellis",r.a.c_ellis))}</td><td>${r.a.c_nps??"—"}</td><td>${esc(rot("c_boot",r.a.c_boot))}</td><td>${esc(rot("c_preco",r.a.c_preco))}</td></tr>`).join("")}</tbody></table></div>
+      <div class="inicio-accoes"><button class="el-botao el-botao--secundario" id="btn-csv">Descarregar CSV</button><span class="legenda">${pf.fonte==="exemplo"?"Está a ver dados de exemplo.":"Todas as respostas reais, uma linha por pessoa."}</span></div>
+    </details></div>
+  </div>`;
+}
+function rot(qid,v){ if(v===undefined||v==="") return "—"; const q=Q.find(x=>x.id===qid); const o=q&&q.opts&&q.opts.find(o=>o[0]===String(v)); return o?o[1]:String(v); }
+const LINK=location.origin+location.pathname;
+
+document.addEventListener("click",async e=>{
+  const fa=e.target.closest("[data-faud]"); if(fa){ pf.aud=fa.dataset.faud; desenharPainel(); return; }
+  const fo=e.target.closest("[data-fonte]"); if(fo){ pf.fonte=fo.dataset.fonte; desenharPainel(); return; }
+  const cp=e.target.closest("[data-copiar]"); if(cp){ try{ await navigator.clipboard.writeText(cp.dataset.copiar); toast("Link copiado"); }catch(err){ const c=cp.previousElementSibling; const r=document.createRange(); r.selectNodeContents(c); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast("Seleccionado. Copie com Ctrl+C."); } return; }
+  if(e.target.closest("#btn-csv")) exportar();
+  if(e.target.closest("#btn-actualizar")) carregarPainel();
+  if(e.target.closest("#btn-sair")){ try{ localStorage.removeItem("el-chave"); }catch(_){} painel.estado="fechado"; reais.remotas=[]; st.entrevista=false; desenharPainel(); render(); }
+});
+document.addEventListener("submit",e=>{
+  if(e.target.id==="form-chave"){ e.preventDefault(); const v=$("#f-chave").value.trim(); if(!v) return; try{ localStorage.setItem("el-chave",v); }catch(_){} carregarPainel(); }
+});
+async function exportar(){
+  const base=pf.fonte==="reais"?todasReais():EXEMPLO;
+  const cols=["ts","aud","modo",...Q.filter(q=>!["info","contacto","consent"].includes(q.type)).map(q=>q.id),"contacto_nome","contacto"];
+  const cel=v=>{ const s=Array.isArray(v)?v.join("; "):(v??""); return /[",\n;]/.test(String(s))?'"'+String(s).replace(/"/g,'""')+'"':String(s); };
+  const linhas=[cols.join(",")].concat(base.map(r=>cols.map(c=>c==="ts"?r.ts:c==="aud"?r.aud:c==="modo"?r.modo:c==="contacto_nome"?(r.a.c_contacto&&r.a.c_contacto.quer?r.a.c_contacto.nome:""):c==="contacto"?(r.a.c_contacto&&r.a.c_contacto.quer?r.a.c_contacto.cont:""):cel(r.a[c])).join(",")));
+  const url=URL.createObjectURL(new Blob(["﻿"+linhas.join("\n")],{type:"text/csv;charset=utf-8"}));
+  const a=document.createElement("a"); a.href=url; a.download=`espectro-lab-validacao-${new Date().toISOString().slice(0,10)}${pf.fonte==="exemplo"?"-exemplo":""}.csv`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+
+// Dica (hover) nas barras
+const dica=$("#dica");
+document.addEventListener("mousemove",e=>{ const t=e.target.closest("[data-tip]"); if(!t){ dica.hidden=true; return; } dica.textContent=t.dataset.tip; dica.hidden=false; const x=Math.min(e.clientX+14,innerWidth-dica.offsetWidth-8); dica.style.left=x+"px"; dica.style.top=(e.clientY+14)+"px"; });
+
+/* ---------- Arranque ---------- */
+const h=(location.hash||"").slice(1);
+if(AUD[h]){ if(st.aud!==h){ st.aud=h; st.a={}; } }
+const minha=lerLocal("el-minha",null);
+if(minha&&minha.aud){ st.existente=true; if(!Object.keys(st.a).length){ st.aud=minha.aud; st.a=minha.a||{}; } }
+render();
+// O separador do painel só aparece à equipa: com #painel no link ou com a chave já guardada neste dispositivo.
+$("#tab-p").hidden = !(h==="painel" || chave());
+if(h==="painel") mostrar("p");
+if(chave()) carregarPainel();
+esvaziarFila();
+addEventListener("online",esvaziarFila);
+
+// Funciona offline depois da primeira visita.
+if("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("sw.js").catch(()=>{});
+})();
+</script>
+
+</body>
+</html>
