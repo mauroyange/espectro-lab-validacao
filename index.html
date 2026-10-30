@@ -437,13 +437,13 @@ const Q = [
   {id:"c_ellis", s:4, type:"single", req:true, label:"Se o Espectro LAB deixasse de existir, como se sentiria?", opts:[["muito","Muito desiludido/a"],["algo","Algo desiludido/a"],["indif","Indiferente"]]},
   {id:"c_nps", s:4, type:"nps", label:{terapeuta:"Recomendaria o LAB a um colega terapeuta?", professor:"Recomendaria o LAB a um colega professor?", familia:"Recomendaria o LAB a outra família?"}, min:["0","De certeza que não"], max:["10","De certeza que sim"]},
   {id:"c_priv", s:4, type:"scale", label:"Quão importante é para si que o LAB não use dados das crianças?", min:["1","Pouco importante"], max:["5","Essencial"]},
-  {id:"c_boot", s:4, type:"single", label:"Participaria num bootcamp presencial do LAB, de 4 a 8 horas, uma vez por mês?", help:"Terapeutas, famílias e professores juntos a criar materiais, ao estilo Startup Weekend.", opts:[["sim","Sim"],["talvez","Talvez"],["nao","Não"]]},
+  {id:"c_boot", s:4, type:"single", label:"Participaria num bootcamp presencial do LAB, de 4 a 8 horas, uma vez por mês?", help:"Em grupos de até 5 pessoas, com terapeutas, professores e famílias. Cada grupo define um projecto, ao estilo Startup Weekend.", opts:[["sim","Sim"],["talvez","Talvez"],["nao","Não"]]},
   {id:"c_bootdia", s:4, type:"multi", when:a=>a.c_boot&&a.c_boot!=="nao", label:"Que horário lhe dá mais jeito?", opts:[["sabm","Sábado de manhã"],["sabd","Sábado, dia inteiro"],["sext","Sexta à tarde"],["semana","Um dia de semana"]]},
   {id:"c_preco", s:4, type:"single", pre:"pacote", label:{terapeuta:"Qual seria um preço justo por mês para este pacote?", professor:"Qual seria um preço justo por mês para este pacote, pago por si ou pela escola?", familia:"Qual seria um preço justo por mês para este pacote?"}, help:"Escolha o valor que lhe parece justo.", opts:PRECO},
   {id:"p_pagador", s:4, aud:[PR], type:"single", label:"Quem pagaria, na sua escola?", opts:[["eu","Eu"],["escola","A escola"],["pais","Os pais"],["patrocinio","Um patrocinador"]]},
 
   // Passo 5 — Fim
-  {id:"c_pedido", s:5, type:"text", label:{terapeuta:"Descreva uma tarefa da sua semana que gostaria que o LAB resolvesse.", professor:"Que material faria mais diferença na sua sala de aula?", familia:"Que material ajudaria mais em casa?"}, help:"Por exemplo: “Uma história social sobre cortar o cabelo, com fotos do salão do bairro.” Não escreva nomes de crianças."},
+  {id:"c_pedido", s:5, type:"text", label:{terapeuta:"Que projecto gostaria de propor ao seu grupo no bootcamp?", professor:"Que projecto gostaria de levar ao bootcamp para a sua sala de aula?", familia:"Que projecto gostaria de levar ao bootcamp para ajudar em casa?"}, help:"Por exemplo: “Uma história social sobre cortar o cabelo, com fotos do salão do bairro.” Não escreva nomes de crianças."},
   {id:"c_sugestao", s:5, type:"text", label:"Alguma preocupação ou sugestão?", small:true},
   {id:"c_contacto", s:5, type:"contacto", label:"Quer testar os primeiros protótipos?"},
   {id:"c_consent", s:5, type:"consent", req:true, label:"Consentimento"}
@@ -515,14 +515,15 @@ function ecraInicio(){
     <div class="abertura__txt">
       <span class="el-num" style="align-self:flex-start">Validação · Out 2026</span>
       <h1>Ajude-nos a construir o LAB certo</h1>
-      <p class="lead">A Espectro LAB quer pôr a inteligência artificial ao serviço de quem trabalha com pessoas autistas. O terapeuta descreve uma tarefa e o LAB ajuda a produzir o material: fichas para imprimir, pequenas apps, jogos, imagens, vídeos e músicas, para usar online e offline.</p>
+      <p class="lead">A Espectro LAB junta terapeutas, professores e famílias para criar, com inteligência artificial, materiais para pessoas autistas: fichas para imprimir, pequenas apps, jogos, imagens, vídeos e músicas, para usar online e offline. Tudo começa num bootcamp mensal, em grupo, e passa sempre pela validação de um terapeuta.</p>
       <p class="suave">Antes de construir, queremos ouvir terapeutas, professores e famílias. São cerca de 7 minutos.</p>
       <div class="meta-linha">${SELO}</div>
     </div>
     <div class="fluxo" aria-label="Como funciona o LAB">
-      <div class="fluxo__passo"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 12h44a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H30l-12 10V42h-8a6 6 0 0 1-6-6V18a6 6 0 0 1 6-6z" class="f-barro-t" style="stroke:var(--barro-texto);stroke-width:2.5"/><circle cx="22" cy="27" r="3" class="f-barro"/><rect x="30" y="25" width="20" height="4" rx="2" class="f-noite"/></svg><div><b>1. O terapeuta pede</b><span>“Preciso de uma agenda visual para a ida ao dentista.”</span></div></div>
-      <div class="fluxo__passo"><svg viewBox="-90 -90 180 180" aria-hidden="true"><path d="M-22.6 8.2A24 24 0 1 1 22.6 8.2" fill="none" class="s-mel" stroke-width="12" stroke-linecap="round"/><path d="M-47.8 4.2A48 48 0 0 1 43.5 -20.3" fill="none" class="s-mangal" stroke-width="12" stroke-linecap="round"/><path d="M-70.9 -12.5A72 72 0 0 1 24.6 -67.7" fill="none" class="s-atl" stroke-width="12" stroke-linecap="round"/><circle r="11" class="f-barro"/></svg><div><b>2. O LAB constrói</b><span>Com IA e uma equipa de tecnologia, à medida da tarefa.</span></div></div>
-      <div class="fluxo__passo"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="16" cy="32" r="9" class="f-barro"/><circle cx="34" cy="32" r="7.5" fill="none" class="s-mangal" stroke-width="5"/><rect x="46" y="24" width="15" height="15" rx="2" class="f-mel" style="stroke:var(--noite);stroke-width:1.5"/></svg><div><b>3. Usa-se em todo o lado</b><span>Na sessão, em casa e na escola. Com ou sem internet.</span></div></div>
+      <div class="fluxo__passo"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="14" cy="32" r="8" class="f-barro"/><circle cx="32" cy="32" r="7" fill="none" class="s-mangal" stroke-width="4.5"/><rect x="43" y="25" width="14" height="14" rx="2" class="f-mel" style="stroke:var(--noite);stroke-width:1.5"/><path class="ink" d="M8 48h48"/></svg><div><b>1. No bootcamp, forma-se um grupo</b><span>Até 5 pessoas, sempre com terapeutas, professores e famílias. Cada grupo escolhe um projecto.</span></div></div>
+      <div class="fluxo__passo"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 12h44a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H30l-12 10V42h-8a6 6 0 0 1-6-6V18a6 6 0 0 1 6-6z" class="f-barro-t" style="stroke:var(--barro-texto);stroke-width:2.5"/><path d="M22 27l6 6 13-13" fill="none" style="stroke:var(--barro-texto)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>2. O terapeuta valida o pedido</b><span>Nenhum projecto avança sem o terapeuta aprovar o que se vai construir.</span></div></div>
+      <div class="fluxo__passo"><svg viewBox="-90 -90 180 180" aria-hidden="true"><path d="M-22.6 8.2A24 24 0 1 1 22.6 8.2" fill="none" class="s-mel" stroke-width="12" stroke-linecap="round"/><path d="M-47.8 4.2A48 48 0 0 1 43.5 -20.3" fill="none" class="s-mangal" stroke-width="12" stroke-linecap="round"/><path d="M-70.9 -12.5A72 72 0 0 1 24.6 -67.7" fill="none" class="s-atl" stroke-width="12" stroke-linecap="round"/><circle r="11" class="f-barro"/></svg><div><b>3. O LAB apoia durante o mês</b><span>A equipa de tecnologia acompanha o projecto do grupo até ficar pronto.</span></div></div>
+      <div class="fluxo__passo"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="16" y="8" width="32" height="44" rx="3" class="ink-f"/><path class="ink" d="M23 18h18M23 25h18M23 32h10"/><circle cx="44" cy="46" r="11" class="f-mangal"/><path d="M39 46l4 4 7-8" fill="none" style="stroke:var(--fundo)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>4. O terapeuta valida o resultado</b><span>Só depois o material vai para a sessão, para casa e para a escola.</span></div></div>
     </div>
   </div></div></div>
   <div class="wrap escolha">
@@ -545,7 +546,8 @@ function htmlQ(q,i){
   const erro=`<p class="q__erro" id="err-${id}">${q.type==="consent"?"Precisamos do seu consentimento para guardar as respostas.":"Escolha pelo menos uma opção."}</p>`;
   if(q.type==="info") return `<div class="q" data-id="${id}"><div class="info">
       <h3>A ideia, em poucas palavras</h3>
-      <p>Uma vez por mês, um bootcamp presencial junta terapeutas, famílias e professores para criar soluções. No resto do mês, o terapeuta pede e o LAB produz os materiais. O LAB não é uma clínica nem uma plataforma de dados de pacientes: trabalha só com o trabalho do terapeuta.</p>
+      <p>Uma vez por mês, num bootcamp presencial, formam-se grupos de até 5 pessoas, sempre com terapeutas, professores e famílias. Cada grupo define um projecto. Durante o mês, a equipa de tecnologia do LAB apoia esse projecto até ficar pronto. O terapeuta valida o pedido no início e o material final no fim.</p>
+      <p>O LAB não é uma clínica nem uma plataforma de dados de pacientes: trabalha só com o trabalho do terapeuta.</p>
       ${SELO}</div></div>`;
   if(q.type==="text") return `<div class="q" data-id="${id}"><label class="q__t" for="f-${id}">${esc(L(q))}</label>${ajuda}<textarea id="f-${id}" name="${id}" ${q.small?'style="min-height:80px"':""}></textarea></div>`;
   if(q.type==="contacto") return `<div class="q" data-id="${id}"><p class="q__t">${esc(L(q))}</p><p class="q__ajuda">Vamos convidar algumas pessoas para experimentar os primeiros materiais (LAB-001 em diante). É opcional.</p>
@@ -572,9 +574,9 @@ function htmlQ(q,i){
 
 function pacote(){
   const itens=[
-    ['<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="16" cy="18" r="6" class="ink"/><circle cx="32" cy="18" r="6" class="ink"/><path class="ink" d="M6 40c0-7 5-12 10-12s10 5 10 12M22 40c0-7 5-12 10-12s10 5 10 12"/></svg>',"Participação no bootcamp mensal","4 a 8 horas, presencial"],
+    ['<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="16" cy="18" r="6" class="ink"/><circle cx="32" cy="18" r="6" class="ink"/><path class="ink" d="M6 40c0-7 5-12 10-12s10 5 10 12M22 40c0-7 5-12 10-12s10 5 10 12"/></svg>',"Participação no bootcamp mensal","4 a 8 horas, em grupo"],
     ['<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="6" width="24" height="34" rx="2" class="ink"/><path class="ink" d="M17 14h14M17 20h14M17 26h9"/><path class="ink" d="M8 42h32"/></svg>',"Impressão de até 50 páginas","Por mês, em papel mate"],
-    ['<svg viewBox="-90 -90 180 180" aria-hidden="true"><path d="M-22.6 8.2A24 24 0 1 1 22.6 8.2" fill="none" class="s-mel" stroke-width="12" stroke-linecap="round"/><path d="M-47.8 4.2A48 48 0 0 1 43.5 -20.3" fill="none" class="s-mangal" stroke-width="12" stroke-linecap="round"/><path d="M-70.9 -12.5A72 72 0 0 1 24.6 -67.7" fill="none" class="s-atl" stroke-width="12" stroke-linecap="round"/><circle r="11" class="f-barro"/></svg>',"Acesso à tecnologia do LAB","Pedir e criar materiais com IA"]
+    ['<svg viewBox="-90 -90 180 180" aria-hidden="true"><path d="M-22.6 8.2A24 24 0 1 1 22.6 8.2" fill="none" class="s-mel" stroke-width="12" stroke-linecap="round"/><path d="M-47.8 4.2A48 48 0 0 1 43.5 -20.3" fill="none" class="s-mangal" stroke-width="12" stroke-linecap="round"/><path d="M-70.9 -12.5A72 72 0 0 1 24.6 -67.7" fill="none" class="s-atl" stroke-width="12" stroke-linecap="round"/><circle r="11" class="f-barro"/></svg>',"Apoio da equipa de tecnologia","Ao projecto do seu grupo, durante o mês"]
   ];
   return `<div class="pacote" aria-label="O que inclui o pacote mensal"><span class="rotulo suave">O pacote mensal inclui</span><div class="pacote__itens">${itens.map(([ic,t,d])=>`<div class="pacote__item">${ic}<span><b>${t}</b><small>${d}</small></span></div>`).join("")}</div></div>`;
 }
@@ -838,7 +840,7 @@ function desenharPainel(){
     ["O problema existe", `${tH3}% dos terapeutas gastam 3 horas ou mais por semana (meta 60%)`, tH3/60, "Tempo gasto a preparar materiais."],
     ["Desejo pelo produto", `${allEM}% ficariam muito desiludidos sem o LAB (meta 40%)`, allEM/40, "Teste de Sean Ellis: acima de 40% indica encaixe produto-mercado."],
     ["Interesse no bootcamp", `${tBS}% dos terapeutas dizem que sim (meta 50%)`, tBS/50, "O formato presencial mensal depende disto."],
-    ["Disposição para pagar", `${allP20}% escolheram 20 000 Kz/mês ou mais para o pacote (meta 30%)`, allP20/30, "Pacote: bootcamp mensal, impressão de até 50 páginas e acesso à tecnologia."],
+    ["Disposição para pagar", `${allP20}% escolheram 20 000 Kz/mês ou mais para o pacote (meta 30%)`, allP20/30, "Pacote: bootcamp mensal em grupo, impressão de até 50 páginas e apoio da equipa de tecnologia ao projecto."],
     ["Confiança", `Média de ${fmt(allPrM.toFixed(1))} em 5 na importância de não usar dados das crianças (meta 4)`, allPrM/4, "Confirma o princípio como mensagem central."]
   ];
 
@@ -880,14 +882,14 @@ function desenharPainel(){
     <div class="bloco g6"><div class="bloco__cab"><h3>Estilo de agenda visual preferido</h3></div>${barras(rows,"c_agenda",qA.opts.map(o=>[o[0],o[1]]),false)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Como querem receber</h3></div>${barras(rows,"c_entrega",qE.opts.map(o=>[o[0],o[1]]),true)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Tempo semanal a preparar materiais</h3></div>${barras(rows,"c_horas",qH.opts,false)}</div>
-    <div class="bloco g6"><div class="bloco__cab"><h3>Preço justo para o pacote mensal</h3><span class="legenda">Bootcamp + até 50 páginas impressas + tecnologia</span></div>${barras(rows,"c_preco",qPr.opts,false)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Preço justo para o pacote mensal</h3><span class="legenda">Bootcamp + até 50 páginas impressas + apoio ao projecto</span></div>${barras(rows,"c_preco",qPr.opts,false)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Acesso à internet</h3><span class="legenda">Decide quanto do LAB tem de funcionar offline</span></div>${barras(rows,"c_net",qN.opts,false)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Onde arranjam os materiais hoje</h3></div>${barras(rows,"c_origem",qO.opts,true)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Melhor horário para o bootcamp</h3></div>${barras(rows,"c_bootdia",qBd.opts,true)}</div>
     ${pf.aud==="todas"||pf.aud===F?`<div class="bloco g6"><div class="bloco__cab"><h3>Momentos do dia com mais pedido de apoio</h3>${etiqueta(F)}</div>${barras(rows.filter(r=>r.aud===F),"f_rotinas",qR.opts,true)}</div>`:""}
 
-    <div class="bloco g8"><div class="bloco__cab"><h3>Banco de pedidos</h3><span class="legenda">${pedidos.length} pedidos · candidatos a desafios do bootcamp</span></div>
-      <div class="pedidos">${pedidos.length?pedidos.map((r,i)=>`<div class="pedido"><p>“${esc(r.a.c_pedido)}”</p><div class="pedido__m">${etiqueta(r.aud)}<span class="el-num">PEDIDO-${String(pedidos.length-i).padStart(3,"0")}</span></div></div>`).join(""):`<p class="legenda">Os pedidos escritos pelos inquiridos aparecem aqui.</p>`}</div></div>
+    <div class="bloco g8"><div class="bloco__cab"><h3>Banco de ideias de projecto</h3><span class="legenda">${pedidos.length} ideias · candidatas a projectos dos grupos</span></div>
+      <div class="pedidos">${pedidos.length?pedidos.map((r,i)=>`<div class="pedido"><p>“${esc(r.a.c_pedido)}”</p><div class="pedido__m">${etiqueta(r.aud)}<span class="el-num">IDEIA-${String(pedidos.length-i).padStart(3,"0")}</span></div></div>`).join(""):`<p class="legenda">Os pedidos escritos pelos inquiridos aparecem aqui.</p>`}</div></div>
     <div class="bloco g4"><div class="bloco__cab"><h3>Querem testar protótipos</h3></div>
       <span class="kpi__v">${contactos.length}</span>
       <p class="legenda">Pessoas que deixaram contacto para testar os primeiros materiais.</p>
