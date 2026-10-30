@@ -1,7 +1,7 @@
 // Service worker da Espectro LAB: o questionário abre sem internet depois da primeira visita.
 // Página: rede primeiro (para receber actualizações), cache como alternativa.
 // Ficheiros estáticos (ícones, manifesto): cache primeiro.
-const CACHE = 'espectro-lab-validacao-v1';
+const CACHE = 'espectro-lab-validacao-v2';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/favicon.svg'];
 
 self.addEventListener('install', (event) => {
