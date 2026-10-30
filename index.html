@@ -187,6 +187,13 @@ textarea:focus,.campo:focus{outline:none;border-color:var(--atlantico);box-shado
 .exemplo-cartao__pic{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .exemplo-cartao__pic div{border:1.5px solid var(--noite);border-radius:6px;padding:4px 2px 2px;text-align:center;font-size:10px;line-height:12px;background:var(--fundo)}
 .exemplo-cartao__pic svg{width:100%;height:auto;max-width:40px}
+.pacote{clear:both;display:flex;flex-direction:column;gap:10px;background:var(--fundo);border:1px solid var(--linha);border-radius:var(--raio-medio);padding:var(--espaco-2);margin-bottom:var(--espaco-2)}
+.pacote__itens{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.pacote__item{display:flex;gap:10px;align-items:center;min-width:0}
+.pacote__item svg{width:40px;height:40px;flex:none}
+.pacote__item b{display:block;font-size:14px;line-height:20px;font-weight:600}
+.pacote__item small{display:block;font-size:13px;line-height:18px;color:var(--texto-suave)}
+@media (max-width:640px){.pacote__itens{grid-template-columns:1fr}}
 .navpassos{display:flex;justify-content:space-between;gap:var(--espaco-2);align-items:center;flex-wrap:wrap;margin-top:var(--espaco-3);padding-top:var(--espaco-3);border-top:1px solid var(--linha)}
 .aviso{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--raio-medio);background:var(--atlantico-tinta);font-size:15px;line-height:24px}
 .aviso--mel{background:var(--mel-tinta)}
@@ -387,7 +394,8 @@ const STEPS = [
 ];
 const HORAS = [["lt1","Menos de 1 hora"],["1a3","1 a 3 horas"],["3a5","3 a 5 horas"],["5a10","5 a 10 horas"],["gt10","Mais de 10 horas"]];
 const HORAS_V = {lt1:.5,"1a3":2,"3a5":4,"5a10":7.5,gt10:12};
-const PRECO = [["0","Nada"],["ate5","Até 5 000 Kz"],["5a15","5 000 a 15 000 Kz"],["15a30","15 000 a 30 000 Kz"],["gt30","Mais de 30 000 Kz"]];
+const PRECO = [["10k","10 000 Kz/mês"],["20k","20 000 Kz/mês"],["30k","30 000 Kz/mês"]];
+const PRECO_V = {"10k":10000,"20k":20000,"30k":30000};
 const T = "terapeuta", PR = "professor", F = "familia";
 
 const Q = [
@@ -431,7 +439,7 @@ const Q = [
   {id:"c_priv", s:4, type:"scale", label:"Quão importante é para si que o LAB não use dados das crianças?", min:["1","Pouco importante"], max:["5","Essencial"]},
   {id:"c_boot", s:4, type:"single", label:"Participaria num bootcamp presencial do LAB, de 4 a 8 horas, uma vez por mês?", help:"Terapeutas, famílias e professores juntos a criar materiais, ao estilo Startup Weekend.", opts:[["sim","Sim"],["talvez","Talvez"],["nao","Não"]]},
   {id:"c_bootdia", s:4, type:"multi", when:a=>a.c_boot&&a.c_boot!=="nao", label:"Que horário lhe dá mais jeito?", opts:[["sabm","Sábado de manhã"],["sabd","Sábado, dia inteiro"],["sext","Sexta à tarde"],["semana","Um dia de semana"]]},
-  {id:"c_preco", s:4, type:"single", label:{terapeuta:"Quanto pagaria por mês por materiais feitos à medida das suas sessões?", professor:"Quanto pagaria por mês, você ou a escola, por materiais para a sala de aula?", familia:"Quanto pagaria por mês por materiais para usar em casa?"}, opts:PRECO},
+  {id:"c_preco", s:4, type:"single", pre:"pacote", label:{terapeuta:"Qual seria um preço justo por mês para este pacote?", professor:"Qual seria um preço justo por mês para este pacote, pago por si ou pela escola?", familia:"Qual seria um preço justo por mês para este pacote?"}, help:"Escolha o valor que lhe parece justo.", opts:PRECO},
   {id:"p_pagador", s:4, aud:[PR], type:"single", label:"Quem pagaria, na sua escola?", opts:[["eu","Eu"],["escola","A escola"],["pais","Os pais"],["patrocinio","Um patrocinador"]]},
 
   // Passo 5 — Fim
@@ -548,7 +556,7 @@ function htmlQ(q,i){
   let corpo="";
   if(q.type==="single"||q.type==="multi"){
     const t=q.type==="single"?"radio":"checkbox";
-    corpo=`<div class="ops">${q.opts.map(([v,l])=>`<label class="op"><input type="${t}" name="${id}" value="${v}"><span class="op__c">${esc(l)}</span></label>`).join("")}</div>`;
+    corpo=`${q.pre==="pacote"?pacote():""}<div class="ops">${q.opts.map(([v,l])=>`<label class="op"><input type="${t}" name="${id}" value="${v}"><span class="op__c">${esc(l)}</span></label>`).join("")}</div>`;
   } else if(q.type==="pic"){
     const t=q.multi?"checkbox":"radio";
     corpo=`<div class="ops ops--pic ${q.cols===4?"ops--4":""}">${q.opts.map(([v,l,k,sub])=>`<label class="op op--pic"><input type="${t}" name="${id}" value="${v}"><span class="op__c"><span class="op__ill">${ILL[k]}</span><span class="op__txt">${esc(l)}${sub?`<br><span class="op__sub">${esc(sub)}</span>`:""}</span></span></label>`).join("")}</div>`;
@@ -562,6 +570,14 @@ function htmlQ(q,i){
   return `<fieldset class="q" data-id="${id}" aria-describedby="err-${id}"><legend>${esc(L(q))}${req}</legend>${ajuda}${corpo}${erro}</fieldset>`;
 }
 
+function pacote(){
+  const itens=[
+    ['<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="16" cy="18" r="6" class="ink"/><circle cx="32" cy="18" r="6" class="ink"/><path class="ink" d="M6 40c0-7 5-12 10-12s10 5 10 12M22 40c0-7 5-12 10-12s10 5 10 12"/></svg>',"Participação no bootcamp mensal","4 a 8 horas, presencial"],
+    ['<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="6" width="24" height="34" rx="2" class="ink"/><path class="ink" d="M17 14h14M17 20h14M17 26h9"/><path class="ink" d="M8 42h32"/></svg>',"Impressão de até 50 páginas","Por mês, em papel mate"],
+    ['<svg viewBox="-90 -90 180 180" aria-hidden="true"><path d="M-22.6 8.2A24 24 0 1 1 22.6 8.2" fill="none" class="s-mel" stroke-width="12" stroke-linecap="round"/><path d="M-47.8 4.2A48 48 0 0 1 43.5 -20.3" fill="none" class="s-mangal" stroke-width="12" stroke-linecap="round"/><path d="M-70.9 -12.5A72 72 0 0 1 24.6 -67.7" fill="none" class="s-atl" stroke-width="12" stroke-linecap="round"/><circle r="11" class="f-barro"/></svg>',"Acesso à tecnologia do LAB","Pedir e criar materiais com IA"]
+  ];
+  return `<div class="pacote" aria-label="O que inclui o pacote mensal"><span class="rotulo suave">O pacote mensal inclui</span><div class="pacote__itens">${itens.map(([ic,t,d])=>`<div class="pacote__item">${ic}<span><b>${t}</b><small>${d}</small></span></div>`).join("")}</div></div>`;
+}
 function exemploCartao(){
   const passos=[["sol","Acordar"],["dentes","Lavar os dentes"],["comer","Matabicho"],["mochila","Mochila"]];
   return `<article class="exemplo-cartao" aria-label="Exemplo de material: agenda visual da manhã">
@@ -727,7 +743,7 @@ function exemplo(){
     a.c_priv=pk([3,4,5],[10,25,65]);
     a.c_boot=pk(["sim","talvez","nao"],aud===T?[55,35,10]:aud===PR?[35,45,20]:[40,40,20]);
     if(a.c_boot!=="nao") a.c_bootdia=mk(["sabm","sabd","sext","semana"],[.7,.25,.3,.15]);
-    a.c_preco=pk(PRECO.map(p=>p[0]),aud===T?[10,35,35,15,5]:aud===PR?[30,40,20,8,2]:[25,40,25,8,2]);
+    a.c_preco=pk(PRECO.map(p=>p[0]),aud===T?[42,43,15]:aud===PR?[60,30,10]:[55,35,10]);
     if(aud===T){ a.t_area=pk(["fala","ocup","psi","psicomot","aba","edesp"],[30,20,25,10,8,7]); a.t_ia=pk(["freq","exp","curioso","reservas"],[12,30,43,15]); }
     if(aud===F){ a.f_rotinas=mk(["acordar","higiene","refeicoes","vestir","sair","esperar","dormir","brincar"],[.4,.55,.5,.3,.45,.6,.5,.25]); a.f_idade=pk(["0a3","4a6","7a12","13a17"],[15,35,35,15]); }
     if(r()<.55) a.c_pedido=pedidos[aud][Math.floor(r()*pedidos[aud].length)];
@@ -805,14 +821,15 @@ function desenharPainel(){
   const npsV=nps.length?Math.round((pro-det)/nps.length*100):0;
   const boot=rows.filter(r=>r.a.c_boot), bootS=pct(boot.filter(r=>r.a.c_boot==="sim").length,boot.length), bootT=pct(boot.filter(r=>r.a.c_boot==="talvez").length,boot.length);
   const hrs=rows.filter(r=>r.a.c_horas).map(r=>HORAS_V[r.a.c_horas]);
-  const pre=rows.filter(r=>r.a.c_preco), pre5=pct(pre.filter(r=>!["0","ate5"].includes(r.a.c_preco)).length,pre.length);
+  const pre=rows.filter(r=>PRECO_V[r.a.c_preco]), pre20=pct(pre.filter(r=>PRECO_V[r.a.c_preco]>=20000).length,pre.length);
+  const preMedio=pre.length?Math.round(pre.reduce((s,r)=>s+PRECO_V[r.a.c_preco],0)/pre.length/500)*500:0;
   const priv=rows.filter(r=>r.a.c_priv), privM=priv.length?priv.reduce((s,r)=>s+r.a.c_priv,0)/priv.length:0;
 
   // Critérios de validação (sobre toda a amostra da fonte escolhida)
   const tH=ter.filter(r=>r.a.c_horas), tH3=pct(tH.filter(r=>["3a5","5a10","gt10"].includes(r.a.c_horas)).length,tH.length);
   const allE=base.filter(r=>r.a.c_ellis), allEM=pct(allE.filter(r=>r.a.c_ellis==="muito").length,allE.length);
   const tB=ter.filter(r=>r.a.c_boot), tBS=pct(tB.filter(r=>r.a.c_boot==="sim").length,tB.length);
-  const allP=base.filter(r=>r.a.c_preco), allP5=pct(allP.filter(r=>!["0","ate5"].includes(r.a.c_preco)).length,allP.length);
+  const allP=base.filter(r=>PRECO_V[r.a.c_preco]), allP20=pct(allP.filter(r=>PRECO_V[r.a.c_preco]>=20000).length,allP.length);
   const allPr=base.filter(r=>r.a.c_priv), allPrM=allPr.length?allPr.reduce((s,r)=>s+r.a.c_priv,0)/allPr.length:0;
   const crit=[
     ["Amostra de terapeutas", `${ter.length} de 30 respostas`, ter.length/30, "A âncora do LAB. Sem 30 terapeutas, o resto não decide nada."],
@@ -820,7 +837,7 @@ function desenharPainel(){
     ["O problema existe", `${tH3}% dos terapeutas gastam 3 horas ou mais por semana (meta 60%)`, tH3/60, "Tempo gasto a preparar materiais."],
     ["Desejo pelo produto", `${allEM}% ficariam muito desiludidos sem o LAB (meta 40%)`, allEM/40, "Teste de Sean Ellis: acima de 40% indica encaixe produto-mercado."],
     ["Interesse no bootcamp", `${tBS}% dos terapeutas dizem que sim (meta 50%)`, tBS/50, "O formato presencial mensal depende disto."],
-    ["Disposição para pagar", `${allP5}% pagariam 5 000 Kz ou mais por mês (meta 30%)`, allP5/30, "Primeiro sinal de receita fora de patrocínios."],
+    ["Disposição para pagar", `${allP20}% escolheram 20 000 Kz/mês ou mais para o pacote (meta 30%)`, allP20/30, "Pacote: bootcamp mensal, impressão de até 50 páginas e acesso à tecnologia."],
     ["Confiança", `Média de ${fmt(allPrM.toFixed(1))} em 5 na importância de não usar dados das crianças (meta 4)`, allPrM/4, "Confirma o princípio como mensagem central."]
   ];
 
@@ -849,7 +866,7 @@ function desenharPainel(){
       <div class="kpi__meta">Detractores (0–6) · neutros · promotores (9–10)</div></div>
     <div class="kpi"><span class="rotulo suave">Tempo semanal a preparar materiais</span><span class="kpi__v">${fmt(mediana(hrs))}<small> h</small></span><div class="kpi__meta">Mediana · n = ${hrs.length}</div></div>
     <div class="kpi"><span class="rotulo suave">Iriam ao bootcamp</span><span class="kpi__v">${bootS}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${bootS}%"></i><b style="left:50%"></b></div><div class="kpi__meta">Mais ${bootT}% talvez · meta 50% ${estado(bootS,50)}</div></div>
-    <div class="kpi"><span class="rotulo suave">Pagariam 5 000 Kz ou mais</span><span class="kpi__v">${pre5}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${pre5}%"></i><b style="left:30%"></b></div><div class="kpi__meta">Por mês · meta 30% ${estado(pre5,30)}</div></div>
+    <div class="kpi"><span class="rotulo suave">Escolheram 20 000 Kz/mês ou mais</span><span class="kpi__v">${pre20}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${pre20}%"></i><b style="left:30%"></b></div><div class="kpi__meta">Preço médio ${preMedio?preMedio.toLocaleString("pt-PT")+" Kz":"—"} · meta 30% ${estado(pre20,30)}</div></div>
   </div>
 
   <div class="grelha">
@@ -862,7 +879,7 @@ function desenharPainel(){
     <div class="bloco g6"><div class="bloco__cab"><h3>Estilo de agenda visual preferido</h3></div>${barras(rows,"c_agenda",qA.opts.map(o=>[o[0],o[1]]),false)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Como querem receber</h3></div>${barras(rows,"c_entrega",qE.opts.map(o=>[o[0],o[1]]),true)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Tempo semanal a preparar materiais</h3></div>${barras(rows,"c_horas",qH.opts,false)}</div>
-    <div class="bloco g6"><div class="bloco__cab"><h3>Quanto pagariam por mês</h3></div>${barras(rows,"c_preco",qPr.opts,false)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Preço justo para o pacote mensal</h3><span class="legenda">Bootcamp + até 50 páginas impressas + tecnologia</span></div>${barras(rows,"c_preco",qPr.opts,false)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Acesso à internet</h3><span class="legenda">Decide quanto do LAB tem de funcionar offline</span></div>${barras(rows,"c_net",qN.opts,false)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Onde arranjam os materiais hoje</h3></div>${barras(rows,"c_origem",qO.opts,true)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Melhor horário para o bootcamp</h3></div>${barras(rows,"c_bootdia",qBd.opts,true)}</div>
