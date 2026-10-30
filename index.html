@@ -394,7 +394,7 @@ const STEPS = [
 ];
 const HORAS = [["lt1","Menos de 1 hora"],["1a3","1 a 3 horas"],["3a5","3 a 5 horas"],["5a10","5 a 10 horas"],["gt10","Mais de 10 horas"]];
 const HORAS_V = {lt1:.5,"1a3":2,"3a5":4,"5a10":7.5,gt10:12};
-const PRECO = [["10k","10 000 Kz/mês"],["20k","20 000 Kz/mês"],["30k","30 000 Kz/mês"]];
+const PRECO = [["10k","10 000 Kz/mês"],["20k","20 000 Kz/mês"],["30k","30 000 Kz/mês"],["nenhum","Nenhum destes valores"]];
 const PRECO_V = {"10k":10000,"20k":20000,"30k":30000};
 const T = "terapeuta", PR = "professor", F = "familia";
 
@@ -743,7 +743,7 @@ function exemplo(){
     a.c_priv=pk([3,4,5],[10,25,65]);
     a.c_boot=pk(["sim","talvez","nao"],aud===T?[55,35,10]:aud===PR?[35,45,20]:[40,40,20]);
     if(a.c_boot!=="nao") a.c_bootdia=mk(["sabm","sabd","sext","semana"],[.7,.25,.3,.15]);
-    a.c_preco=pk(PRECO.map(p=>p[0]),aud===T?[42,43,15]:aud===PR?[60,30,10]:[55,35,10]);
+    a.c_preco=pk(PRECO.map(p=>p[0]),aud===T?[38,38,12,12]:aud===PR?[48,24,8,20]:[44,28,8,20]);
     if(aud===T){ a.t_area=pk(["fala","ocup","psi","psicomot","aba","edesp"],[30,20,25,10,8,7]); a.t_ia=pk(["freq","exp","curioso","reservas"],[12,30,43,15]); }
     if(aud===F){ a.f_rotinas=mk(["acordar","higiene","refeicoes","vestir","sair","esperar","dormir","brincar"],[.4,.55,.5,.3,.45,.6,.5,.25]); a.f_idade=pk(["0a3","4a6","7a12","13a17"],[15,35,35,15]); }
     if(r()<.55) a.c_pedido=pedidos[aud][Math.floor(r()*pedidos[aud].length)];
@@ -821,15 +821,16 @@ function desenharPainel(){
   const npsV=nps.length?Math.round((pro-det)/nps.length*100):0;
   const boot=rows.filter(r=>r.a.c_boot), bootS=pct(boot.filter(r=>r.a.c_boot==="sim").length,boot.length), bootT=pct(boot.filter(r=>r.a.c_boot==="talvez").length,boot.length);
   const hrs=rows.filter(r=>r.a.c_horas).map(r=>HORAS_V[r.a.c_horas]);
-  const pre=rows.filter(r=>PRECO_V[r.a.c_preco]), pre20=pct(pre.filter(r=>PRECO_V[r.a.c_preco]>=20000).length,pre.length);
-  const preMedio=pre.length?Math.round(pre.reduce((s,r)=>s+PRECO_V[r.a.c_preco],0)/pre.length/500)*500:0;
+  const pre=rows.filter(r=>r.a.c_preco), pre20=pct(pre.filter(r=>PRECO_V[r.a.c_preco]>=20000).length,pre.length);
+  const preV=pre.filter(r=>PRECO_V[r.a.c_preco]), preNenhum=pct(pre.length-preV.length,pre.length);
+  const preMedio=preV.length?Math.round(preV.reduce((s,r)=>s+PRECO_V[r.a.c_preco],0)/preV.length/500)*500:0;
   const priv=rows.filter(r=>r.a.c_priv), privM=priv.length?priv.reduce((s,r)=>s+r.a.c_priv,0)/priv.length:0;
 
   // Critérios de validação (sobre toda a amostra da fonte escolhida)
   const tH=ter.filter(r=>r.a.c_horas), tH3=pct(tH.filter(r=>["3a5","5a10","gt10"].includes(r.a.c_horas)).length,tH.length);
   const allE=base.filter(r=>r.a.c_ellis), allEM=pct(allE.filter(r=>r.a.c_ellis==="muito").length,allE.length);
   const tB=ter.filter(r=>r.a.c_boot), tBS=pct(tB.filter(r=>r.a.c_boot==="sim").length,tB.length);
-  const allP=base.filter(r=>PRECO_V[r.a.c_preco]), allP20=pct(allP.filter(r=>PRECO_V[r.a.c_preco]>=20000).length,allP.length);
+  const allP=base.filter(r=>r.a.c_preco), allP20=pct(allP.filter(r=>PRECO_V[r.a.c_preco]>=20000).length,allP.length);
   const allPr=base.filter(r=>r.a.c_priv), allPrM=allPr.length?allPr.reduce((s,r)=>s+r.a.c_priv,0)/allPr.length:0;
   const crit=[
     ["Amostra de terapeutas", `${ter.length} de 30 respostas`, ter.length/30, "A âncora do LAB. Sem 30 terapeutas, o resto não decide nada."],
@@ -866,7 +867,7 @@ function desenharPainel(){
       <div class="kpi__meta">Detractores (0–6) · neutros · promotores (9–10)</div></div>
     <div class="kpi"><span class="rotulo suave">Tempo semanal a preparar materiais</span><span class="kpi__v">${fmt(mediana(hrs))}<small> h</small></span><div class="kpi__meta">Mediana · n = ${hrs.length}</div></div>
     <div class="kpi"><span class="rotulo suave">Iriam ao bootcamp</span><span class="kpi__v">${bootS}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${bootS}%"></i><b style="left:50%"></b></div><div class="kpi__meta">Mais ${bootT}% talvez · meta 50% ${estado(bootS,50)}</div></div>
-    <div class="kpi"><span class="rotulo suave">Escolheram 20 000 Kz/mês ou mais</span><span class="kpi__v">${pre20}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${pre20}%"></i><b style="left:30%"></b></div><div class="kpi__meta">Preço médio ${preMedio?preMedio.toLocaleString("pt-PT")+" Kz":"—"} · meta 30% ${estado(pre20,30)}</div></div>
+    <div class="kpi"><span class="rotulo suave">Escolheram 20 000 Kz/mês ou mais</span><span class="kpi__v">${pre20}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${pre20}%"></i><b style="left:30%"></b></div><div class="kpi__meta">Preço médio ${preMedio?preMedio.toLocaleString("pt-PT")+" Kz":"—"} · ${preNenhum}% nenhum destes · meta 30% ${estado(pre20,30)}</div></div>
   </div>
 
   <div class="grelha">
