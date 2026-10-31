@@ -434,7 +434,7 @@ const Q = [
 
   // Passo 4 — O LAB
   {id:"i_lab", s:4, type:"info"},
-  {id:"c_ellis", s:4, type:"single", req:true, label:"Se o Espectro LAB deixasse de existir, como se sentiria?", opts:[["muito","Muito desiludido/a"],["algo","Algo desiludido/a"],["indif","Indiferente"]]},
+  {id:"c_ellis", s:4, type:"single", req:true, label:"Se o Espectro LAB não chegar a avançar, como se sentiria?", help:"O LAB ainda é uma ideia em validação. Queremos saber que falta lhe faria.", opts:[["muito","Muito desiludido/a"],["algo","Algo desiludido/a"],["indif","Indiferente"]]},
   {id:"c_nps", s:4, type:"nps", label:{terapeuta:"Recomendaria o LAB a um colega terapeuta?", professor:"Recomendaria o LAB a um colega professor?", familia:"Recomendaria o LAB a outra família?"}, min:["0","De certeza que não"], max:["10","De certeza que sim"]},
   {id:"c_priv", s:4, type:"scale", label:"Quão importante é para si que o LAB não use dados das crianças?", min:["1","Pouco importante"], max:["5","Essencial"]},
   {id:"c_boot", s:4, type:"single", label:"Participaria num bootcamp presencial do LAB, de 4 a 8 horas, uma vez por mês?", help:"Em grupos de até 5 pessoas, com terapeutas, professores e famílias. Cada grupo define um projecto, ao estilo Startup Weekend.", opts:[["sim","Sim"],["talvez","Talvez"],["nao","Não"]]},
@@ -575,7 +575,7 @@ function htmlQ(q,i){
 function pacote(){
   const itens=[
     ['<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="16" cy="18" r="6" class="ink"/><circle cx="32" cy="18" r="6" class="ink"/><path class="ink" d="M6 40c0-7 5-12 10-12s10 5 10 12M22 40c0-7 5-12 10-12s10 5 10 12"/></svg>',"Participação no bootcamp mensal","4 a 8 horas, em grupo"],
-    ['<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="6" width="24" height="34" rx="2" class="ink"/><path class="ink" d="M17 14h14M17 20h14M17 26h9"/><path class="ink" d="M8 42h32"/></svg>',"Impressão de até 50 páginas","Por mês, em papel mate"],
+    ['<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="6" width="24" height="34" rx="2" class="ink"/><path class="ink" d="M17 14h14M17 20h14M17 26h9"/><path class="ink" d="M8 42h32"/></svg>',"Impressão de até 20 páginas","Por mês, em folha A4 normal"],
     ['<svg viewBox="-90 -90 180 180" aria-hidden="true"><path d="M-22.6 8.2A24 24 0 1 1 22.6 8.2" fill="none" class="s-mel" stroke-width="12" stroke-linecap="round"/><path d="M-47.8 4.2A48 48 0 0 1 43.5 -20.3" fill="none" class="s-mangal" stroke-width="12" stroke-linecap="round"/><path d="M-70.9 -12.5A72 72 0 0 1 24.6 -67.7" fill="none" class="s-atl" stroke-width="12" stroke-linecap="round"/><circle r="11" class="f-barro"/></svg>',"Apoio da equipa de tecnologia","Ao projecto do seu grupo, durante o mês"]
   ];
   return `<div class="pacote" aria-label="O que inclui o pacote mensal"><span class="rotulo suave">O pacote mensal inclui</span><div class="pacote__itens">${itens.map(([ic,t,d])=>`<div class="pacote__item">${ic}<span><b>${t}</b><small>${d}</small></span></div>`).join("")}</div></div>`;
@@ -838,9 +838,9 @@ function desenharPainel(){
     ["Amostra de terapeutas", `${ter.length} de 30 respostas`, ter.length/30, "A âncora do LAB. Sem 30 terapeutas, o resto não decide nada."],
     ["Amostra de professores e famílias", `${por(PR).length} de 20 professores · ${por(F).length} de 20 famílias`, Math.min(por(PR).length,por(F).length)/20, "Mínimo de 20 em cada grupo."],
     ["O problema existe", `${tH3}% dos terapeutas gastam 3 horas ou mais por semana (meta 60%)`, tH3/60, "Tempo gasto a preparar materiais."],
-    ["Desejo pelo produto", `${allEM}% ficariam muito desiludidos sem o LAB (meta 40%)`, allEM/40, "Teste de Sean Ellis: acima de 40% indica encaixe produto-mercado."],
+    ["Desejo pelo produto", `${allEM}% ficariam muito desiludidos se o LAB não avançar (meta 40%)`, allEM/40, "Teste de Sean Ellis, adaptado à fase de validação: acima de 40% é um bom sinal de procura."],
     ["Interesse no bootcamp", `${tBS}% dos terapeutas dizem que sim (meta 50%)`, tBS/50, "O formato presencial mensal depende disto."],
-    ["Disposição para pagar", `${allP20}% escolheram 20 000 Kz/mês ou mais para o pacote (meta 30%)`, allP20/30, "Pacote: bootcamp mensal em grupo, impressão de até 50 páginas e apoio da equipa de tecnologia ao projecto."],
+    ["Disposição para pagar", `${allP20}% escolheram 20 000 Kz/mês ou mais para o pacote (meta 30%)`, allP20/30, "Pacote: bootcamp mensal em grupo, impressão de até 20 páginas A4 e apoio da equipa de tecnologia ao projecto."],
     ["Confiança", `Média de ${fmt(allPrM.toFixed(1))} em 5 na importância de não usar dados das crianças (meta 4)`, allPrM/4, "Confirma o princípio como mensagem central."]
   ];
 
@@ -863,7 +863,7 @@ function desenharPainel(){
 
   <div class="kpis">
     <div class="kpi"><span class="rotulo suave">Respostas</span><span class="kpi__v">${rows.length}</span><div class="kpi__meta">${ORD.map(a=>`<span style="display:inline-flex;align-items:center;gap:6px"><i class="forma forma--${a}"></i>${base.filter(r=>r.aud===a).length} ${AUD[a].plural.toLowerCase()}</span>`).join("")}</div></div>
-    <div class="kpi"><span class="rotulo suave">Muito desiludidos sem o LAB</span><span class="kpi__v">${ellM}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${Math.min(ellM,100)}%"></i><b style="left:40%"></b></div><div class="kpi__meta">Meta 40% · n = ${ell.length} ${estado(ellM,40)}</div></div>
+    <div class="kpi"><span class="rotulo suave">Muito desiludidos se não avançar</span><span class="kpi__v">${ellM}<small>%</small></span><div class="medidor" aria-hidden="true"><i style="width:${Math.min(ellM,100)}%"></i><b style="left:40%"></b></div><div class="kpi__meta">Meta 40% · n = ${ell.length} ${estado(ellM,40)}</div></div>
     <div class="kpi"><span class="rotulo suave">Recomendação (NPS)</span><span class="kpi__v">${npsV>0?"+":""}${npsV}</span>
       <div class="nps-barra" aria-label="Detractores ${pct(det,nps.length)}%, neutros ${pct(nps.length-pro-det,nps.length)}%, promotores ${pct(pro,nps.length)}%"><i class="nps-d" style="width:${pct(det,nps.length)}%">${pct(det,nps.length)}%</i><i class="nps-p" style="width:${pct(nps.length-pro-det,nps.length)}%">${pct(nps.length-pro-det,nps.length)}%</i><i class="nps-pr" style="width:${pct(pro,nps.length)}%">${pct(pro,nps.length)}%</i></div>
       <div class="kpi__meta">Detractores (0–6) · neutros · promotores (9–10)</div></div>
@@ -882,7 +882,7 @@ function desenharPainel(){
     <div class="bloco g6"><div class="bloco__cab"><h3>Estilo de agenda visual preferido</h3></div>${barras(rows,"c_agenda",qA.opts.map(o=>[o[0],o[1]]),false)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Como querem receber</h3></div>${barras(rows,"c_entrega",qE.opts.map(o=>[o[0],o[1]]),true)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Tempo semanal a preparar materiais</h3></div>${barras(rows,"c_horas",qH.opts,false)}</div>
-    <div class="bloco g6"><div class="bloco__cab"><h3>Preço justo para o pacote mensal</h3><span class="legenda">Bootcamp + até 50 páginas impressas + apoio ao projecto</span></div>${barras(rows,"c_preco",qPr.opts,false)}</div>
+    <div class="bloco g6"><div class="bloco__cab"><h3>Preço justo para o pacote mensal</h3><span class="legenda">Bootcamp + até 20 páginas A4 impressas + apoio ao projecto</span></div>${barras(rows,"c_preco",qPr.opts,false)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Acesso à internet</h3><span class="legenda">Decide quanto do LAB tem de funcionar offline</span></div>${barras(rows,"c_net",qN.opts,false)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Onde arranjam os materiais hoje</h3></div>${barras(rows,"c_origem",qO.opts,true)}</div>
     <div class="bloco g6"><div class="bloco__cab"><h3>Melhor horário para o bootcamp</h3></div>${barras(rows,"c_bootdia",qBd.opts,true)}</div>
